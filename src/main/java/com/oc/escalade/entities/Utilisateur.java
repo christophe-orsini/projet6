@@ -14,15 +14,19 @@ import javax.validation.constraints.NotNull;
 public class Utilisateur
 {
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
+	@NotNull
 	@Column(unique = true, updatable = false, nullable = false)
 	private String email; // login
 	@NotNull
 	private String password;
-	@NotNull
 	private String nom;
-	@NotNull
 	private String prenom;
-	
+	@NotNull
+	@Enumerated
+	@Column(columnDefinition = "tinyint")
+	private RoleEnum role = RoleEnum.UTILISATEUR;
 	@OneToMany(mappedBy="proprietaire")
 	private Collection<Exemplaire> exemplaires; // de topos
 	@OneToMany(mappedBy="auteur")
@@ -34,11 +38,21 @@ public class Utilisateur
 		super();
 		
 	}
-
-	public Utilisateur(String email, String password) {
+	
+	public Utilisateur(@NotNull String email, @NotNull String password) {
 		super();
 		this.email = email;
 		this.password = password;
+	}
+	
+	public Utilisateur(@NotNull String email, @NotNull String password, String nom, String prenom, @NotNull RoleEnum role)
+	{
+		super();
+		this.email = email;
+		this.password = password;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.role = role;
 	}
 
 	public String getEmail() {
@@ -95,6 +109,26 @@ public class Utilisateur
 
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
+	}
+
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+
+	public RoleEnum getRole()
+	{
+		return role;
+	}
+
+	public void setRole(RoleEnum role)
+	{
+		this.role = role;
 	}
 
 	@Override
