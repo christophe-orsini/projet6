@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.oc.escalade.entities.Topo;
 
 @Repository
-public interface TopoDAO extends JpaRepository<Topo, Long>
+public interface TopoRepository extends JpaRepository<Topo, Long>
 {
 
 }
