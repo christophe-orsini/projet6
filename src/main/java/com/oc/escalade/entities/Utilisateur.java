@@ -25,8 +25,8 @@ public class Utilisateur
 	private String prenom;
 	@NotNull
 	@Enumerated
-	@Column(columnDefinition = "tinyint")
 	private RoleEnum role = RoleEnum.UTILISATEUR;
+	
 	@OneToMany(mappedBy="proprietaire")
 	private Collection<Exemplaire> exemplaires; // de topos
 	@OneToMany(mappedBy="auteur")

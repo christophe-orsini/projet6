@@ -2,6 +2,7 @@ package com.oc.escalade.entities;
 
 import java.util.Date;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * Commentaire laissé par un utilisateur au sujet d'un site
@@ -14,7 +15,10 @@ public class Commentaire
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date datePublication;
+	@NotNull
 	private String contenu;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
