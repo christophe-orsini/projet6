@@ -41,5 +41,11 @@ public class EscaladeApplication implements CommandLineRunner
 		
 		Site nouveauSite = siteService.publierSite(site, utilisateur.getId());
 		System.out.println(nouveauSite.getNom());
+		
+		nouveauSite = siteService.consulterSite(1L);
+		System.out.println(nouveauSite.getNom());
+		
+		nouveauSite = siteService.consulterSite("Un site");
+		System.out.println(nouveauSite.getNom());
 	}
 }
