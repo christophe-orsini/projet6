@@ -26,5 +26,14 @@ public interface SiteService
 	 * @return Site : Le site nouvellement créé
 	 */
 	public Site publierSite(Site site, Long auteurId); // F4
-	public void taguer(Site site); // F6
+	/**
+	 * Permet de taguer un site comme Officiel
+	 * @param id Long : L'id du site
+	 */
+	public void taguer(Long id); // F6
+	/**
+	 * Permet de taguer un site comme Officiel
+	 * @param nom String : Le nom du site
+	 */
+	public void taguer(String nom); // F6
 }

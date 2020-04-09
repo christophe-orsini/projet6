@@ -45,7 +45,9 @@ public class EscaladeApplication implements CommandLineRunner
 		nouveauSite = siteService.consulterSite(1L);
 		System.out.println(nouveauSite.getNom());
 		
+		siteService.taguer(1L);
 		nouveauSite = siteService.consulterSite("Un site");
-		System.out.println(nouveauSite.getNom());
+		System.out.println(nouveauSite.isTag() ? "Tagué" : "Non tagué");
+		
 	}
 }

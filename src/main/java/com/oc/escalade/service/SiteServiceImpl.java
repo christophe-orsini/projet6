@@ -72,8 +72,39 @@ public class SiteServiceImpl implements SiteService
 	
 	@Override
 	@Transactional
-	public void taguer(Site site) {
-		// TODO Auto-generated method stub
-		
+	public void taguer(Long id)
+	{
+		Optional<Site> site = siteRepository.findById(id);
+			
+		// vérifier que le site existe
+		if (!site.isPresent())
+		{
+			throw new RuntimeException("Site introuvable");
+		}
+	
+		if (!site.get().isTag())
+		{
+			site.get().setTag(true);
+			siteRepository.save(site.get());
+		}
+	}
+	
+	@Override
+	@Transactional
+	public void taguer(String nom)
+	{
+		Optional<Site> site = siteRepository.findByNom(nom);
+			
+		// vérifier que le site existe
+		if (!site.isPresent())
+		{
+			throw new RuntimeException("Site introuvable");
+		}
+	
+		if (!site.get().isTag())
+		{
+			site.get().setTag(true);
+			siteRepository.save(site.get());
+		}
 	}
 }
