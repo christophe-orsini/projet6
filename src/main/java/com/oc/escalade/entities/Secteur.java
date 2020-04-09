@@ -18,7 +18,6 @@ public class Secteur implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
 	private String nom;
 	
 	@OneToMany(mappedBy = "secteur", cascade = {CascadeType.ALL})
