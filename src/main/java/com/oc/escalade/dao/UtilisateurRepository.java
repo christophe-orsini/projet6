@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import com.oc.escalade.entities.Utilisateur;
 
 @Repository
-public interface UtilisateurDAO extends JpaRepository<Utilisateur, Long>
+public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>
 {
 	public Optional<Utilisateur> findByEmail(String email);
 }

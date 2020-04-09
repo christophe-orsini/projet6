@@ -1,47 +1,25 @@
 package com.oc.escalade.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.oc.escalade.dao.UtilisateurDAO;
+import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
 
-@Service
-public class UtilisateurService implements IUtilisateurService
+public interface UtilisateurService
 {
-	@Autowired
-	private UtilisateurDAO utilisateurDAO;
+	/**
+	 * Inscription d'un nouvel utilisateur
+	 * @param email String : le login qui doit être unique dans la base
+	 * @param password String : le mot de passe qui sera chiffré
+	 * @param nom String : le nom de l'utilisateur
+	 * @param prenom String : le prenom de l'utilisateur
+	 * @param role RoleEnum : le role de l'utilisateur {@link RoleEnum}
+	 * @return Utilisateur : l'utilisateur créé
+	 */
+	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role); // F3
 	
-	@Override
-	public Utilisateur inscription(String email, String password) {
-		// verifier si email existe
-		if (utilisateurDAO.findByEmail(email).isPresent())
-		{
-			throw new RuntimeException("L'utilisateur " + email + " existe déjà");
-		}
-		
-		Utilisateur utilisateur = new Utilisateur(email, password);
-		utilisateur.setNom("");
-		utilisateur.setPrenom("");
-		
-		return utilisateurDAO.save(utilisateur);
-	}
-
-	@Override
-	public Utilisateur inscription(String email, String password, String nom, String prenom)
-	{
-		// verifier si email existe
-		if (utilisateurDAO.findByEmail(email).isPresent())
-		{
-			throw new RuntimeException("L'utilisateur " + email + " existe déjà");
-		}
-		
-		Utilisateur utilisateur = new Utilisateur(email, password);
-		utilisateur.setNom(nom);
-		utilisateur.setPrenom(prenom);
-		
-		return utilisateurDAO.save(utilisateur);
-	}
-
+	/**
+	 * Retourne un utilisateur existant
+	 * @param email String : l'email de l'utilisateur
+	 * @return Utilisateur :
+	 */
+	public Utilisateur consulter(String email);
 }
