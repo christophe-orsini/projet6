@@ -163,5 +163,24 @@ public class Site implements Serializable
 	public String toString() {
 		return "Site [nom=" + nom + ", commune=" + commune + "]";
 	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (this == obj) return true;
+		
+		if (obj == null || !(obj instanceof Site)) return false;
+		
+		Site site = (Site) obj;
+		
+		return (site.nom == nom && site.commune == commune);
+	}
+
+	@Override
+	public int hashCode()
+	{
+		return (nom + commune).hashCode();
+	}
+	
 	
 }
