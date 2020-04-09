@@ -49,8 +49,8 @@ public class Site implements Serializable
 		
 	}
 
-	public Site(String nom, String commune, String departement, String pays, double latitude, double longitude, boolean tag,
-			Collection<Secteur> secteurs, Utilisateur auteur) {
+	public Site(@NotNull String nom, @NotNull String commune, @NotNull String departement, String pays, @NotNull double latitude, @NotNull double longitude)
+	{
 		super();
 		this.nom = nom;
 		this.commune = commune;
@@ -58,9 +58,21 @@ public class Site implements Serializable
 		this.pays = pays;
 		this.latitude = latitude;
 		this.longitude = longitude;
+	}
+
+	public Site(@NotNull String nom, @NotNull String commune, @NotNull String departement, String pays, @NotNull double latitude, @NotNull double longitude, @NotNull Utilisateur auteur, boolean tag,
+			Collection<Secteur> secteurs) {
+		super();
+		this.nom = nom;
+		this.commune = commune;
+		this.departement = departement;
+		this.pays = pays;
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.auteur = auteur;
 		this.tag = tag;
 		this.secteurs = secteurs;
-		this.auteur = auteur;
+	
 	}
 	
 	public String getNom() {
