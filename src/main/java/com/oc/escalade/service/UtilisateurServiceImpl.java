@@ -17,7 +17,7 @@ public class UtilisateurServiceImpl implements UtilisateurService
 	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role)
 	{
 		// verifier si email existe
-		if (utilisateurRepository.findByEmail(email).isPresent())
+		if (utilisateurRepository.findByEmailIgnoreCase(email).isPresent())
 		{
 			throw new RuntimeException("L'utilisateur " + email + " existe déjà");
 		}
@@ -34,7 +34,7 @@ public class UtilisateurServiceImpl implements UtilisateurService
 	@Override
 	public Utilisateur consulter(String email)
 	{
-		Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmail(email);
+		Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findByEmailIgnoreCase(email);
 		// verifier si email existe
 		if (!utilisateurOpt.isPresent())
 		{
