@@ -3,9 +3,9 @@ package com.oc.escalade.service;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.oc.escalade.dao.UtilisateurRepository;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
-import com.oc.escalade.repositories.UtilisateurRepository;
 
 @Service
 public class UtilisateurServiceImpl implements UtilisateurService

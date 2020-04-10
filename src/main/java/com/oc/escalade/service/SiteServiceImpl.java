@@ -6,10 +6,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.oc.escalade.dao.SiteRepository;
+import com.oc.escalade.dao.UtilisateurRepository;
+import com.oc.escalade.entities.Secteur;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
-import com.oc.escalade.repositories.SiteRepository;
-import com.oc.escalade.repositories.UtilisateurRepository;
 
 @Service
 public class SiteServiceImpl implements SiteService
@@ -34,7 +35,7 @@ public class SiteServiceImpl implements SiteService
 	
 	@Override
 	public Site consulterSite(String nom) {
-		Optional<Site> site = siteRepository.findByNom(nom);
+		Optional<Site> site = siteRepository.findByNomIgnoreCase(nom);
 		
 		// vérifier que le site existe
 		if (!site.isPresent())
@@ -46,9 +47,11 @@ public class SiteServiceImpl implements SiteService
 	}
 	
 	@Override
-	public Collection<Site> rechercherSites(String champ, String valeur) {
-		// TODO Auto-generated method stub
-		return null;
+	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, 
+			int nombreSecteurs, int nombreVoies)
+	{
+		//return siteRepository.findAllByElements(nom, commune, departement, pays, cotation, nombreSecteurs, nombreVoies);
+		return siteRepository.findAllByElements(nom, commune, departement, pays);
 	}
 	
 	@Override
@@ -65,6 +68,12 @@ public class SiteServiceImpl implements SiteService
 		
 		// enrgeistrer l'auteur
 		site.setAuteur(utilisateur.get());
+		
+		// enregistre le site dans les secteurs
+		for (Secteur secteur : site.getSecteurs())
+		{
+			secteur.setSite(site);
+		}
 		
 		// sauvegarder et retourner le site
 		return siteRepository.save(site);
@@ -93,7 +102,7 @@ public class SiteServiceImpl implements SiteService
 	@Transactional
 	public void taguer(String nom)
 	{
-		Optional<Site> site = siteRepository.findByNom(nom);
+		Optional<Site> site = siteRepository.findByNomIgnoreCase(nom);
 			
 		// vérifier que le site existe
 		if (!site.isPresent())

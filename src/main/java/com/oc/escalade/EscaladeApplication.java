@@ -6,12 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import com.oc.escalade.dao.SiteRepository;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Secteur;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.entities.Voie;
-import com.oc.escalade.repositories.SiteRepository;
 import com.oc.escalade.service.SiteService;
 import com.oc.escalade.service.UtilisateurService;
 

@@ -1,4 +1,4 @@
-package com.oc.escalade.repositories;
+package com.oc.escalade.dao;
 
 import java.util.Optional;
 
