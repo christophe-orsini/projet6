@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+import com.oc.escalade.entities.Commentaire;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Secteur;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.entities.Voie;
+import com.oc.escalade.service.CommentaireService;
 import com.oc.escalade.service.SiteService;
 import com.oc.escalade.service.UtilisateurService;
 
@@ -20,6 +21,8 @@ public class EscaladeApplication implements CommandLineRunner
 	private UtilisateurService utilisateurService;
 	@Autowired
 	private SiteService siteService;
+	@Autowired
+	private CommentaireService commentaireService;
 	
 	public static void main(String[] args)
 	{
@@ -29,6 +32,11 @@ public class EscaladeApplication implements CommandLineRunner
 
 	@Override
 	public void run(String... args) throws Exception
+	{
+		Test();
+	}
+	
+	private void Test()
 	{
 		// Utilisateur
 		Utilisateur utilisateur = utilisateurService.inscription("email", "password", "Nom", "prenom", RoleEnum.MEMBRE);
@@ -65,7 +73,12 @@ public class EscaladeApplication implements CommandLineRunner
 		
 		site = siteService.publierSite(site, utilisateur.getId());
 		System.out.println(site.getNom());
-		
 
+		// Commentaire
+		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site, utilisateur);
+		System.out.println(commentaire.getContenu());
+		
+		Commentaire commentaire2 = commentaireService.lireCommentaire(1L);
+		System.out.println(commentaire2.getAuteur().getEmail());
 	}
 }

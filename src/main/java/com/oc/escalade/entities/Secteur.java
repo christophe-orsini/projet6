@@ -22,7 +22,7 @@ public class Secteur implements Serializable
 	@OneToMany(mappedBy = "secteur", cascade = CascadeType.PERSIST)
 	private Collection<Voie> voies;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "site_id")
 	private Site site;
 	

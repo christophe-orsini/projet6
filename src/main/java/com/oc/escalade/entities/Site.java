@@ -40,7 +40,7 @@ public class Site implements Serializable
 	@OneToMany(mappedBy="site", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Commentaire> commentaires;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="utilisateur_id")
 	private Utilisateur auteur; // personne ayant déposé le site
 	

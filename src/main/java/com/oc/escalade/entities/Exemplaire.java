@@ -15,11 +15,11 @@ public class Exemplaire
 	private Long id;
 	private boolean disponible;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="topo_id")
 	private Topo topo;
 	@JoinColumn(name="utilisateur_id")
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Utilisateur proprietaire;
 	
 	public Exemplaire() {

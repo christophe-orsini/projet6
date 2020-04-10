@@ -21,10 +21,10 @@ public class Commentaire
 	@NotNull
 	private String contenu;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="site_id")
 	private Site site; // concerné par le commentaire
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="utilisateur_id")
 	private Utilisateur auteur;
 	
