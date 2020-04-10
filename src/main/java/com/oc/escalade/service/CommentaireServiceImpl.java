@@ -24,48 +24,47 @@ public class CommentaireServiceImpl implements CommentaireService
 	
 	@Override
 	@Transactional
-	public Commentaire commenter(String commentaire, Site site, Utilisateur auteur) {
+	public Commentaire commenter(String commentaire, Long siteId, Long auteurId) {
 		// verification de l'existence de l'utilisateur
-		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(auteur.getId());
-			
+		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(auteurId);
 		if (!utilisateur.isPresent())
 		{
 			throw new RuntimeException("L'utilisateur n'existe pas");
 		}
 		
 		// verification de l'existence du site
-		Optional<Site> siteLocal = siteRepository.findById(site.getId());
-			
-		if (!siteLocal.isPresent())
+		Optional<Site> site = siteRepository.findById(siteId);
+		if (!site.isPresent())
 		{
 			throw new RuntimeException("Le site n'existe pas");
 		}
 		
 		// création et MàJ du commentaire
-		Commentaire commentaireLocal = commentaireRepository.save(new Commentaire(new Date(), commentaire, site, auteur));
+		Commentaire commentaireLocal = commentaireRepository.save(new Commentaire(new Date(), commentaire, site.get(), utilisateur.get()));
 		
 		// MàJ de l'utilisateur
 		utilisateur.get().getCommentaires().add(commentaireLocal);
 		
 		// MàJ du site
-		siteLocal.get().getCommentaires().add(commentaireLocal);
+		site.get().getCommentaires().add(commentaireLocal);
 		
 		return commentaireLocal;
 	}
 	
 	@Override
 	@Transactional
-	public Commentaire modifierCommentaire(Commentaire commentaire) {
+	public Commentaire modifierCommentaire(Long commentaireId, String texte) {
 		// verification de l'existence de l'utilisateur
-		Optional<Commentaire> commentaireLocal = commentaireRepository.findById(commentaire.getId());
+		Optional<Commentaire> commentaireLocal = commentaireRepository.findById(commentaireId);
 			
 		if (!commentaireLocal.isPresent())
 		{
 			throw new RuntimeException("Le commentaire n'existe pas");
 		}
 		
-		// changement du contenu
-		commentaireLocal.get().setContenu(commentaire.getContenu());
+		// changement du commentaire
+		commentaireLocal.get().setContenu(texte);
+		commentaireLocal.get().setDateModification(new Date());
 		
 		return commentaireRepository.save(commentaireLocal.get());
 	}

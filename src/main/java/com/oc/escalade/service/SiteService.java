@@ -12,12 +12,6 @@ public interface SiteService
 	 * @return Site : Le site trouvé
 	 */
 	public Site consulterSite(Long id); // F1
-	/**
-	 * Consulter un site correspondant à un Nom
-	 * @param nom String : Le nom du site
-	 * @return Site : Le site trouvé
-	 */
-	public Site consulterSite(String nom); // F1
 	
 	/**
 	 * Permet de retrouver une liste de sites en fonction de plusieurs citères
@@ -43,10 +37,5 @@ public interface SiteService
 	 * Permet de taguer un site comme Officiel
 	 * @param id Long : L'id du site
 	 */
-	public void taguer(Long id); // F6
-	/**
-	 * Permet de taguer un site comme Officiel
-	 * @param nom String : Le nom du site
-	 */
-	public void taguer(String nom); // F6
+	public Site taguer(Long id); // F6
 }

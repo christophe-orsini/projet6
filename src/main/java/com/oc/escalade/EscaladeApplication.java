@@ -1,15 +1,14 @@
 package com.oc.escalade;
 
+import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.oc.escalade.entities.Commentaire;
 import com.oc.escalade.entities.RoleEnum;
-import com.oc.escalade.entities.Secteur;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
-import com.oc.escalade.entities.Voie;
 import com.oc.escalade.service.CommentaireService;
 import com.oc.escalade.service.SiteService;
 import com.oc.escalade.service.UtilisateurService;
@@ -46,39 +45,54 @@ public class EscaladeApplication implements CommandLineRunner
 		System.out.println(utilisateur.getEmail());
 		System.out.println(utilisateur.getRole().value());
 		
-		// Site
-		Site site = new Site("Un site", "Valence", "Drôme", "France", 44.5, 5.5);
+		// Site		
+		Site site = siteService.publierSite(new Site("Site 1", "Un jolie site", "Valence", "Drôme", "France", 44.5, 5.5), utilisateur.getId());
 		System.out.println(site.getNom());
 		
-		Site nouveauSite = siteService.publierSite(site, utilisateur.getId());
-		System.out.println(nouveauSite.getNom());
-		
-		nouveauSite = siteService.consulterSite(1L);
+		Site nouveauSite = siteService.consulterSite(1L);
 		System.out.println(nouveauSite.getNom());
 		
 		siteService.taguer(1L);
-		nouveauSite = siteService.consulterSite("Un site");
-		System.out.println(nouveauSite.isTag() ? "Tagué" : "Non tagué");
+		site = siteService.consulterSite(1L);
+		System.out.println(site.isTag() ? "Tagué" : "Non tagué");
 		
-		site = new Site("Un autre site", "Romans", "Drôme", "France", 44.7, 5.6);
-		
-		Voie voie = new Voie("Une voie", null);
-				
-		Secteur secteur = new Secteur("Un secteur", null);
-		secteur.getVoies().add(voie);
-		site.getSecteurs().add(secteur);
-		
-		secteur = new Secteur("Un deuxième", null);
-		site.getSecteurs().add(secteur);
-		
-		site = siteService.publierSite(site, utilisateur.getId());
-		System.out.println(site.getNom());
+		site = new Site("Site 2", "Un autre jolie site", "Romans", "Drôme", "France", 44.7, 5.6);
+		site.setNbreSecteurs(3);
+		site.setNbreVoies(8);
+		site.setNbreLongueurs(21);
+		site.setNbreRelais(16);
+		site.setCotationMini("3b");
+		site.setCotationMaxi("9c");
+		nouveauSite = siteService.publierSite(site, utilisateur.getId());
+		System.out.println(nouveauSite.getDescription());
 
+		Collection<Site> sites = siteService.rechercherSites(null, null, null, "France", null, 0, 0);
+		for (Site site2 : sites)
+		{
+			System.out.println(site2.getCommune());
+		}
+		
+		sites = siteService.rechercherSites(null, null, null, null, "4a", 0, 0);
+		for (Site site2 : sites)
+		{
+			System.out.println(site2.getCommune());
+		}
+		
+		sites = siteService.rechercherSites(null, null, null, null, null, 3, 0);
+		for (Site site2 : sites)
+		{
+			System.out.println(site2.getCommune());
+		}
+		
 		// Commentaire
-		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site, utilisateur);
+		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site.getId(), utilisateur.getId());
 		System.out.println(commentaire.getContenu());
 		
 		Commentaire commentaire2 = commentaireService.lireCommentaire(1L);
 		System.out.println(commentaire2.getAuteur().getEmail());
+		
+		commentaire = commentaireService.modifierCommentaire(1L, "Changement de commentaire");
+		System.out.println(commentaire.getContenu());
+		
 	}
 }
