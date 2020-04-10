@@ -36,8 +36,8 @@ public class SiteServiceImpl implements SiteService
 	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, 
 			int nombreSecteurs, int nombreVoies)
 	{
-		String secteurs = String.valueOf(nombreSecteurs);
-		String voies = String.valueOf(nombreSecteurs);
+		String secteurs = nombreSecteurs > 0 ? String.valueOf(nombreSecteurs) : null;
+		String voies = nombreVoies > 0 ? String.valueOf(nombreVoies) : null;
 
 		return siteRepository.findAllByElements(nom, commune, departement, pays, cotation, secteurs, voies);
 	}

@@ -166,72 +166,72 @@ public class Site implements Serializable
 		this.id = id;
 	}
 
-	protected String getDescription()
+	public String getDescription()
 	{
 		return description;
 	}
 
-	protected void setDescription(String description)
+	public void setDescription(String description)
 	{
 		this.description = description;
 	}
 
-	protected int getNbreSecteurs()
+	public int getNbreSecteurs()
 	{
 		return nbreSecteurs;
 	}
 
-	protected void setNbreSecteurs(int nbreSecteurs)
+	public void setNbreSecteurs(int nbreSecteurs)
 	{
 		this.nbreSecteurs = nbreSecteurs;
 	}
 
-	protected int getNbreVoies()
+	public int getNbreVoies()
 	{
 		return nbreVoies;
 	}
 
-	protected void setNbreVoies(int nbreVoies)
+	public void setNbreVoies(int nbreVoies)
 	{
 		this.nbreVoies = nbreVoies;
 	}
 
-	protected int getNbreLongueurs()
+	public int getNbreLongueurs()
 	{
 		return nbreLongueurs;
 	}
 
-	protected void setNbreLongueurs(int nbreLongueurs)
+	public void setNbreLongueurs(int nbreLongueurs)
 	{
 		this.nbreLongueurs = nbreLongueurs;
 	}
 
-	protected int getNbreRelais()
+	public int getNbreRelais()
 	{
 		return nbreRelais;
 	}
 
-	protected void setNbreRelais(int nbreRelais)
+	public void setNbreRelais(int nbreRelais)
 	{
 		this.nbreRelais = nbreRelais;
 	}
 
-	protected String getCotationMini()
+	public String getCotationMini()
 	{
 		return cotationMini;
 	}
 
-	protected void setCotationMini(String cotationMini)
+	public void setCotationMini(String cotationMini)
 	{
 		this.cotationMini = cotationMini;
 	}
 
-	protected String getCotationMaxi()
+	public String getCotationMaxi()
 	{
 		return cotationMaxi;
 	}
 
-	protected void setCotationMaxi(String cotationMaxi)
+	public void setCotationMaxi(String cotationMaxi)
 	{
 		this.cotationMaxi = cotationMaxi;
 	}
