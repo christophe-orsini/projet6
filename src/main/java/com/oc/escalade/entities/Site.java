@@ -1,10 +1,7 @@
 package com.oc.escalade.entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -23,6 +20,7 @@ public class Site implements Serializable
 	private Long id;
 	@Column(unique = true, nullable = false)
 	private String nom;
+	private String description;
 	@NotNull
 	private String commune;
 	@NotNull
@@ -33,56 +31,51 @@ public class Site implements Serializable
 	@NotNull
 	private double longitude;
 	private boolean tag; // marqué par l'administrateur
+	private int nbreSecteurs;
+	private int nbreVoies;
+	private int nbreLongueurs;
+	private int nbreRelais;
+	private String cotationMini;
+	private String cotationMaxi;
 	
-	@OneToMany(mappedBy="site", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private Collection<Secteur> secteurs;
-	
-	@OneToMany(mappedBy="site", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="site")
 	private Collection<Commentaire> commentaires;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="utilisateur_id")
 	private Utilisateur auteur; // personne ayant déposé le site
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@ManyToMany
 	@JoinTable(name="topo_site", joinColumns = @JoinColumn(name="site_id"), inverseJoinColumns = @JoinColumn(name="topo_id"))
 	private Collection<Topo> topos;
 	
 	public Site() {
 		super();
-		secteurs = new HashSet<Secteur>();
-		commentaires = new HashSet<Commentaire>();
-		topos = new HashSet<Topo>();
 	}
 
-	public Site(@NotNull String nom, @NotNull String commune, @NotNull String departement, String pays, @NotNull double latitude, @NotNull double longitude)
+	public Site(String nom, String description, String commune, String departement, String pays, double latitude, double longitude)
 	{
 		super();
 		this.nom = nom;
+		this.description = description;
 		this.commune = commune;
 		this.departement = departement;
 		this.pays = pays;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		secteurs = new HashSet<Secteur>();
-		commentaires = new HashSet<Commentaire>();
-		topos = new HashSet<Topo>();
 	}
 
-	public Site(@NotNull String nom, @NotNull String commune, @NotNull String departement, String pays, @NotNull double latitude, @NotNull double longitude, @NotNull Utilisateur auteur, boolean tag,
-			List<Secteur> secteurs) {
+	public Site(String nom, String description, String commune, String departement, String pays, double latitude, double longitude, Utilisateur auteur)
+	{
 		super();
 		this.nom = nom;
+		this.description = description;
 		this.commune = commune;
 		this.departement = departement;
 		this.pays = pays;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.auteur = auteur;
-		this.tag = tag;
-		this.secteurs = secteurs != null ? secteurs : new HashSet<Secteur>();
-		commentaires = new HashSet<Commentaire>();
-		topos = new HashSet<Topo>();
 	}
 	
 	public String getNom() {
@@ -141,14 +134,6 @@ public class Site implements Serializable
 		this.tag = tag;
 	}
 
-	public Collection<Secteur> getSecteurs() {
-		return secteurs;
-	}
-
-	public void setSecteurs(Collection<Secteur> secteurs) {
-		this.secteurs = secteurs;
-	}
-
 	public Utilisateur getAuteur() {
 		return auteur;
 	}
@@ -181,6 +166,76 @@ public class Site implements Serializable
 		this.id = id;
 	}
 
+	protected String getDescription()
+	{
+		return description;
+	}
+
+	protected void setDescription(String description)
+	{
+		this.description = description;
+	}
+
+	protected int getNbreSecteurs()
+	{
+		return nbreSecteurs;
+	}
+
+	protected void setNbreSecteurs(int nbreSecteurs)
+	{
+		this.nbreSecteurs = nbreSecteurs;
+	}
+
+	protected int getNbreVoies()
+	{
+		return nbreVoies;
+	}
+
+	protected void setNbreVoies(int nbreVoies)
+	{
+		this.nbreVoies = nbreVoies;
+	}
+
+	protected int getNbreLongueurs()
+	{
+		return nbreLongueurs;
+	}
+
+	protected void setNbreLongueurs(int nbreLongueurs)
+	{
+		this.nbreLongueurs = nbreLongueurs;
+	}
+
+	protected int getNbreRelais()
+	{
+		return nbreRelais;
+	}
+
+	protected void setNbreRelais(int nbreRelais)
+	{
+		this.nbreRelais = nbreRelais;
+	}
+
+	protected String getCotationMini()
+	{
+		return cotationMini;
+	}
+
+	protected void setCotationMini(String cotationMini)
+	{
+		this.cotationMini = cotationMini;
+	}
+
+	protected String getCotationMaxi()
+	{
+		return cotationMaxi;
+	}
+
+	protected void setCotationMaxi(String cotationMaxi)
+	{
+		this.cotationMaxi = cotationMaxi;
+	}
+
 	@Override
 	public String toString() {
 		return "Site [nom=" + nom + ", commune=" + commune + "]";
@@ -204,9 +259,4 @@ public class Site implements Serializable
 		return (nom + commune).hashCode();
 	}
 
-	// *********************** methods
-	protected int getNbSecteurs()
-	{
-		return secteurs.size();
-	}
 }
