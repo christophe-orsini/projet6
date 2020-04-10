@@ -23,7 +23,7 @@ public class Voie implements Serializable
 	@OneToMany(mappedBy = "voie", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Longueur> longueurs;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "secteur_id")
 	private Secteur secteur;
 	

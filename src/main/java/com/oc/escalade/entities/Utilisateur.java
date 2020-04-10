@@ -27,11 +27,11 @@ public class Utilisateur
 	@Enumerated
 	private RoleEnum role = RoleEnum.UTILISATEUR;
 	
-	@OneToMany(mappedBy="proprietaire")
+	@OneToMany(mappedBy="proprietaire", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Exemplaire> exemplaires; // de topos
-	@OneToMany(mappedBy="auteur")
+	@OneToMany(mappedBy="auteur", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Site> sites; // déposés
-	@OneToMany(mappedBy="auteur")
+	@OneToMany(mappedBy="auteur", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Commentaire> commentaires;
 	
 	public Utilisateur() {

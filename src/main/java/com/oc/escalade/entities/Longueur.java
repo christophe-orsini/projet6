@@ -25,7 +25,7 @@ public class Longueur implements Serializable
 	private int nbreSpits; // nombre de points d'accroche
 	private String relais; // nom du relais final s'il existe
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "voie_id")
 	private Voie voie;
 	

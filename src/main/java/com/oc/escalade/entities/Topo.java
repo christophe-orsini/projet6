@@ -22,10 +22,10 @@ public class Topo
 	@NotNull
 	private String decription;
 	
-	@OneToMany(mappedBy="topo")
+	@OneToMany(mappedBy="topo", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Exemplaire> exemplaires;
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name="topo_site", joinColumns = @JoinColumn(name="topo_id"), inverseJoinColumns = @JoinColumn(name="site_id"))
 	private Collection<Site> sites;
 	
