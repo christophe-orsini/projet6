@@ -2,9 +2,8 @@ package com.oc.escalade.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-
+import java.util.HashSet;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 /**
  * Regroupement de voies pour un site
@@ -20,7 +19,7 @@ public class Secteur implements Serializable
 	private Long id;
 	private String nom;
 	
-	@OneToMany(mappedBy = "secteur", cascade = {CascadeType.ALL})
+	@OneToMany(mappedBy = "secteur", cascade = CascadeType.PERSIST)
 	private Collection<Voie> voies;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -29,13 +28,13 @@ public class Secteur implements Serializable
 	
 	public Secteur() {
 		super();
-		
+		voies = new HashSet<Voie>();
 	}
 
 	public Secteur(String nom, Collection<Voie> voies) {
 		super();
 		this.nom = nom;
-		this.voies = voies;
+		this.voies = voies != null ? voies : new HashSet<Voie>();
 	}
 
 	public String getNom() {
@@ -72,6 +71,13 @@ public class Secteur implements Serializable
 	@Override
 	public String toString() {
 		return "Secteur [nom=" + nom + "]";
+	}
+	
+	// ********************* meyhods
+	
+	public int getNbVoies()
+	{
+		return voies.size();
 	}
 
 }
