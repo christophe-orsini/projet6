@@ -78,6 +78,12 @@ public class EscaladeApplication implements CommandLineRunner
 			System.out.println(site2.getCommune());
 		}
 		
+		sites = siteService.rechercherSites(null, null, null, null, null, 3, 0);
+		for (Site site2 : sites)
+		{
+			System.out.println(site2.getCommune());
+		}
+		
 		// Commentaire
 		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site, utilisateur);
 		System.out.println(commentaire.getContenu());

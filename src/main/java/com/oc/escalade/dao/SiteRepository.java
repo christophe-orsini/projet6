@@ -15,8 +15,8 @@ public interface SiteRepository extends JpaRepository<Site, Long>
 			+ " AND (:commune is null or commune LIKE %:commune%)"
 			+ " AND (:departement is null or departement LIKE %:departement%)"
 			+ " AND (:pays is null or pays LIKE %:pays%)"
-			+ " AND (:secteurs is null or nbreSecteurs = :secteurs)"
-			+ " AND (:voies is null or nbreVoies = :voies)"
+			+ " AND (:secteurs is null or nbreSecteurs = CAST(:secteurs AS integer))"
+			+ " AND (:voies is null or nbreVoies = CAST(:voies AS integer))"
 			+ " AND (:cotation is null or :cotation >= cotationMini)"
 			+ " AND (:cotation is null or :cotation <= cotationMaxi)"
 			+ " ORDER BY pays, departement, commune, nom")
