@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.oc.escalade.dao.SiteRepository;
 import com.oc.escalade.dao.UtilisateurRepository;
-import com.oc.escalade.entities.Secteur;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
 
@@ -34,24 +33,13 @@ public class SiteServiceImpl implements SiteService
 	}
 	
 	@Override
-	public Site consulterSite(String nom) {
-		Optional<Site> site = siteRepository.findByNomIgnoreCase(nom);
-		
-		// vérifier que le site existe
-		if (!site.isPresent())
-		{
-			throw new RuntimeException("Site introuvable");
-		}
-		
-		return site.get();
-	}
-	
-	@Override
 	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, 
 			int nombreSecteurs, int nombreVoies)
 	{
-		//return siteRepository.findAllByElements(nom, commune, departement, pays, cotation, nombreSecteurs, nombreVoies);
-		return siteRepository.findAllByElements(nom, commune, departement, pays);
+		String secteurs = String.valueOf(nombreSecteurs);
+		String voies = String.valueOf(nombreSecteurs);
+
+		return siteRepository.findAllByElements(nom, commune, departement, pays, cotation, secteurs, voies);
 	}
 	
 	@Override
@@ -69,11 +57,7 @@ public class SiteServiceImpl implements SiteService
 		// enrgeistrer l'auteur
 		site.setAuteur(utilisateur.get());
 		
-		// enregistre le site dans les secteurs
-		for (Secteur secteur : site.getSecteurs())
-		{
-			secteur.setSite(site);
-		}
+		site.setTag(false);
 		
 		// sauvegarder et retourner le site
 		return siteRepository.save(site);
@@ -81,7 +65,7 @@ public class SiteServiceImpl implements SiteService
 	
 	@Override
 	@Transactional
-	public void taguer(Long id)
+	public Site taguer(Long id)
 	{
 		Optional<Site> site = siteRepository.findById(id);
 			
@@ -96,24 +80,7 @@ public class SiteServiceImpl implements SiteService
 			site.get().setTag(true);
 			siteRepository.save(site.get());
 		}
-	}
-	
-	@Override
-	@Transactional
-	public void taguer(String nom)
-	{
-		Optional<Site> site = siteRepository.findByNomIgnoreCase(nom);
-			
-		// vérifier que le site existe
-		if (!site.isPresent())
-		{
-			throw new RuntimeException("Site introuvable");
-		}
-	
-		if (!site.get().isTag())
-		{
-			site.get().setTag(true);
-			siteRepository.save(site.get());
-		}
+		
+		return site.get();
 	}
 }
