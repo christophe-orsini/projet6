@@ -10,5 +10,5 @@ import com.oc.escalade.entities.Utilisateur;
 @Repository
 public interface UtilisateurRepository extends JpaRepository<Utilisateur, Long>
 {
-	public Optional<Utilisateur> findByEmail(String email);
+	public Optional<Utilisateur> findByEmailIgnoreCase(String email);
 }

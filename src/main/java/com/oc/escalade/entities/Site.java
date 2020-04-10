@@ -1,8 +1,10 @@
 package com.oc.escalade.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
-
+import java.util.HashSet;
+import java.util.List;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,6 +14,7 @@ import javax.validation.constraints.NotNull;
  *
  */
 @Entity
+
 public class Site implements Serializable
 {
 	private static final long serialVersionUID = 1L;
@@ -31,26 +34,29 @@ public class Site implements Serializable
 	private double longitude;
 	private boolean tag; // marqué par l'administrateur
 	
-	@OneToMany(mappedBy="site", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy="site", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Secteur> secteurs;
-	@OneToMany(mappedBy="site")
+	
+	@OneToMany(mappedBy="site", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Commentaire> commentaires;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="utilisateur_id")
 	private Utilisateur auteur; // personne ayant déposé le site
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	@JoinTable(name="topo_site", joinColumns = @JoinColumn(name="site_id"), inverseJoinColumns = @JoinColumn(name="topo_id"))
 	private Collection<Topo> topos;
 	
 	public Site() {
 		super();
-		
+		secteurs = new HashSet<Secteur>();
+		commentaires = new HashSet<Commentaire>();
+		topos = new HashSet<Topo>();
 	}
 
-	public Site(String nom, String commune, String departement, String pays, double latitude, double longitude, boolean tag,
-			Collection<Secteur> secteurs, Utilisateur auteur) {
+	public Site(@NotNull String nom, @NotNull String commune, @NotNull String departement, String pays, @NotNull double latitude, @NotNull double longitude)
+	{
 		super();
 		this.nom = nom;
 		this.commune = commune;
@@ -58,9 +64,25 @@ public class Site implements Serializable
 		this.pays = pays;
 		this.latitude = latitude;
 		this.longitude = longitude;
-		this.tag = tag;
-		this.secteurs = secteurs;
+		secteurs = new HashSet<Secteur>();
+		commentaires = new HashSet<Commentaire>();
+		topos = new HashSet<Topo>();
+	}
+
+	public Site(@NotNull String nom, @NotNull String commune, @NotNull String departement, String pays, @NotNull double latitude, @NotNull double longitude, @NotNull Utilisateur auteur, boolean tag,
+			List<Secteur> secteurs) {
+		super();
+		this.nom = nom;
+		this.commune = commune;
+		this.departement = departement;
+		this.pays = pays;
+		this.latitude = latitude;
+		this.longitude = longitude;
 		this.auteur = auteur;
+		this.tag = tag;
+		this.secteurs = secteurs != null ? secteurs : new HashSet<Secteur>();
+		commentaires = new HashSet<Commentaire>();
+		topos = new HashSet<Topo>();
 	}
 	
 	public String getNom() {
@@ -181,6 +203,10 @@ public class Site implements Serializable
 	{
 		return (nom + commune).hashCode();
 	}
-	
-	
+
+	// *********************** methods
+	protected int getNbSecteurs()
+	{
+		return secteurs.size();
+	}
 }

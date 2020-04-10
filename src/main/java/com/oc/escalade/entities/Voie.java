@@ -2,7 +2,7 @@ package com.oc.escalade.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
-
+import java.util.HashSet;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -20,7 +20,7 @@ public class Voie implements Serializable
 	private Long id;
 	private String nom;
 	
-	@OneToMany(mappedBy = "voie", cascade = {CascadeType.PERSIST})
+	@OneToMany(mappedBy = "voie", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
 	private Collection<Longueur> longueurs;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -29,13 +29,13 @@ public class Voie implements Serializable
 	
 	public Voie() {
 		super();
-		
+		longueurs = new HashSet<Longueur>();
 	}
 
 	public Voie(String nom, Collection<Longueur> longueurs) {
 		super();
 		this.nom = nom;
-		this.longueurs = longueurs;
+		this.longueurs = longueurs != null ? longueurs : new HashSet<Longueur>();
 	}
 
 	public String getNom() {
