@@ -1,7 +1,5 @@
 package com.oc.escalade.entities;
 
-import java.util.Collection;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -22,12 +20,9 @@ public class Topo
 	@NotNull
 	private String decription;
 	
-	@OneToMany(mappedBy="topo", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private Collection<Exemplaire> exemplaires;
-	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	@JoinTable(name="topo_site", joinColumns = @JoinColumn(name="topo_id"), inverseJoinColumns = @JoinColumn(name="site_id"))
-	private Collection<Site> sites;
+	@JoinColumn(name="proprietaire_id")
+	@ManyToOne
+	private Utilisateur proprietaire;
 	
 	public Topo() {
 		super();
@@ -65,22 +60,6 @@ public class Topo
 		this.decription = decription;
 	}
 
-	public Collection<Site> getSites() {
-		return sites;
-	}
-
-	public void setSites(Collection<Site> sites) {
-		this.sites = sites;
-	}
-
-	public Collection<Exemplaire> getExemplaires() {
-		return exemplaires;
-	}
-
-	public void setExemplaires(Collection<Exemplaire> exemplaires) {
-		this.exemplaires = exemplaires;
-	}
-
 	public Long getId() {
 		return id;
 	}
@@ -88,6 +67,16 @@ public class Topo
 	@Override
 	public String toString() {
 		return "Topo [titre=" + titre + "]";
+	}
+
+	public Utilisateur getProprietaire()
+	{
+		return proprietaire;
+	}
+
+	public void setProprietaire(Utilisateur proprietaire)
+	{
+		this.proprietaire = proprietaire;
 	}
 	
 }

@@ -8,9 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import com.oc.escalade.entities.Commentaire;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Site;
+import com.oc.escalade.entities.Topo;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.service.CommentaireService;
 import com.oc.escalade.service.SiteService;
+import com.oc.escalade.service.TopoService;
 import com.oc.escalade.service.UtilisateurService;
 
 @SpringBootApplication
@@ -22,6 +24,8 @@ public class EscaladeApplication implements CommandLineRunner
 	private SiteService siteService;
 	@Autowired
 	private CommentaireService commentaireService;
+	@Autowired
+	private TopoService topoService;
 	
 	public static void main(String[] args)
 	{
@@ -94,5 +98,8 @@ public class EscaladeApplication implements CommandLineRunner
 		commentaire = commentaireService.modifierCommentaire(1L, "Changement de commentaire");
 		System.out.println(commentaire.getContenu());
 		
+		// Topo
+		Topo topo = topoService.enregistrerTopo(new Topo("Le super Topo", "La région du sud", "Ce topo décrit un topo du sud"), 1L);
+		System.out.println(topo.getDecription());
 	}
 }

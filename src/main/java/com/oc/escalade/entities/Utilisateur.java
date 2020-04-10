@@ -27,11 +27,11 @@ public class Utilisateur
 	@Enumerated
 	private RoleEnum role = RoleEnum.UTILISATEUR;
 	
-	@OneToMany(mappedBy="proprietaire", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
-	private Collection<Exemplaire> exemplaires; // de topos
-	@OneToMany(mappedBy="auteur", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="proprietaire")
+	private Collection<Topo> topos; 
+	@OneToMany(mappedBy="auteur")
 	private Collection<Site> sites; // déposés
-	@OneToMany(mappedBy="auteur", fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
+	@OneToMany(mappedBy="auteur")
 	private Collection<Commentaire> commentaires;
 	
 	public Utilisateur() {
@@ -69,14 +69,6 @@ public class Utilisateur
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public Collection<Exemplaire> getExemplaires() {
-		return exemplaires;
-	}
-
-	public void setExemplaires(Collection<Exemplaire> exemplaires) {
-		this.exemplaires = exemplaires;
 	}
 
 	public Collection<Site> getSites() {
@@ -129,6 +121,16 @@ public class Utilisateur
 	public void setRole(RoleEnum role)
 	{
 		this.role = role;
+	}
+
+	public Collection<Topo> getTopos()
+	{
+		return topos;
+	}
+
+	public void setTopos(Collection<Topo> topos)
+	{
+		this.topos = topos;
 	}
 
 	@Override

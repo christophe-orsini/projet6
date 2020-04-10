@@ -45,10 +45,6 @@ public class Site implements Serializable
 	@JoinColumn(name="utilisateur_id")
 	private Utilisateur auteur; // personne ayant déposé le site
 	
-	@ManyToMany
-	@JoinTable(name="topo_site", joinColumns = @JoinColumn(name="site_id"), inverseJoinColumns = @JoinColumn(name="topo_id"))
-	private Collection<Topo> topos;
-	
 	public Site() {
 		super();
 	}
@@ -148,14 +144,6 @@ public class Site implements Serializable
 
 	public void setCommentaires(Collection<Commentaire> commentaires) {
 		this.commentaires = commentaires;
-	}
-
-	public Collection<Topo> getTopos() {
-		return topos;
-	}
-
-	public void setTopos(Collection<Topo> topos) {
-		this.topos = topos;
 	}
 
 	public Long getId() {
