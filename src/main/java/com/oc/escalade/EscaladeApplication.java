@@ -85,11 +85,14 @@ public class EscaladeApplication implements CommandLineRunner
 		}
 		
 		// Commentaire
-		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site, utilisateur);
+		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site.getId(), utilisateur.getId());
 		System.out.println(commentaire.getContenu());
 		
 		Commentaire commentaire2 = commentaireService.lireCommentaire(1L);
 		System.out.println(commentaire2.getAuteur().getEmail());
+		
+		commentaire = commentaireService.modifierCommentaire(1L, "Changement de commentaire");
+		System.out.println(commentaire.getContenu());
 		
 	}
 }

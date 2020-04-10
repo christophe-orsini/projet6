@@ -13,19 +13,19 @@ public interface CommentaireService
 	 * @param auteur Utilisateur : L'auteur du commentaire
 	 * @retrun Commentaire : Le commentaire nouvellement créé
 	 */
-	public Commentaire commenter(String commentaire, Site site, Utilisateur auteur); // F5
+	public Commentaire commenter(String commentaire, Long siteId, Long auteurId);
 	
 	/**
 	 * Modifier un commentaire
 	 * @param commentaire Commentaire : Le commentaire à modifier
 	 * @rerurn Commentaire : Le commentaire modifié
 	 */
-	public Commentaire modifierCommentaire(Commentaire commentaire); // F7
+	public Commentaire modifierCommentaire(Long commentaireId, String texte);
 	/**
 	 * Retourne un commentaire
 	 * @param id Long : L'id du commentaire
 	 * @return Commentaire : Le commentaire
 	 */
 	public Commentaire lireCommentaire(Long id);
-	
+
 }

@@ -20,11 +20,13 @@ public class Commentaire
 	private Date datePublication;
 	@NotNull
 	private String contenu;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date dateModification;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="site_id")
-	private Site site; // concerné par le commentaire
-	@ManyToOne(fetch = FetchType.EAGER)
+	private Site site;
+	@ManyToOne
 	@JoinColumn(name="utilisateur_id")
 	private Utilisateur auteur;
 	
@@ -77,4 +79,13 @@ public class Commentaire
 		return id;
 	}
 
+	public Date getDateModification()
+	{
+		return dateModification;
+	}
+
+	public void setDateModification(Date dateModification)
+	{
+		this.dateModification = dateModification;
+	}
 }
