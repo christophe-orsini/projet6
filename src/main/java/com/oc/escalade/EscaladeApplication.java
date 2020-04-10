@@ -1,12 +1,10 @@
 package com.oc.escalade;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.oc.escalade.dao.SiteRepository;
+
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Secteur;
 import com.oc.escalade.entities.Site;
@@ -22,8 +20,6 @@ public class EscaladeApplication implements CommandLineRunner
 	private UtilisateurService utilisateurService;
 	@Autowired
 	private SiteService siteService;
-	@Autowired
-	private SiteRepository siteRepository;
 	
 	public static void main(String[] args)
 	{
@@ -70,15 +66,6 @@ public class EscaladeApplication implements CommandLineRunner
 		site = siteService.publierSite(site, utilisateur.getId());
 		System.out.println(site.getNom());
 		
-		int nb = siteRepository.countSecteursBySiteId(2L);
-		System.out.println(nb);
-		
-		/*
-		 * Collection<Site> sites = siteService.rechercherSites("site", null, null,
-		 * null, null, 0, 0); for (Site site2 : sites) {
-		 * System.out.println(site2.getNom()); if (site2.getSecteurs() != null) { for
-		 * (Secteur secteur1 : site2.getSecteurs()) {
-		 * System.out.println(secteur1.getNom()); } } }
-		 */
+
 	}
 }

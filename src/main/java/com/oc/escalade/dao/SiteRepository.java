@@ -30,7 +30,4 @@ public interface SiteRepository extends JpaRepository<Site, Long>
 			+ " ORDER BY pays, departement, commune, nom")
 	public Collection<Site> findAllByElements(@Param("nom") String nom, @Param("commune") String commune, @Param("departement") String departement,
 			@Param("pays") String pays);
-	
-	@Query("SELECT COUNT(se) FROM Site AS si JOIN Secteur AS se ON se.site = si.id WHERE si.id = :siteId")
-	public int countSecteursBySiteId(@Param("siteId") Long id);
 }
