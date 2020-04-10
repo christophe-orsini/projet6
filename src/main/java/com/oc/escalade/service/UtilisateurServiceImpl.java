@@ -44,4 +44,16 @@ public class UtilisateurServiceImpl implements UtilisateurService
 		return utilisateurOpt.get();		
 	}
 	
+	@Override
+	public Utilisateur consulter(Long id)
+	{
+		Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findById(id);
+		// verifier si email existe
+		if (!utilisateurOpt.isPresent())
+		{
+			throw new RuntimeException("L'utilisateur N° " + id + " n'existe pas");
+		}
+		
+		return utilisateurOpt.get();		
+	}
 }

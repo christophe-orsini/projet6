@@ -15,11 +15,16 @@ public interface UtilisateurService
 	 * @return Utilisateur : l'utilisateur créé
 	 */
 	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role); // F3
-	
 	/**
 	 * Retourne un utilisateur existant
 	 * @param email String : l'email de l'utilisateur
 	 * @return Utilisateur :
 	 */
 	public Utilisateur consulter(String email);
+	/**
+	 * Retourne un utilisateur existant
+	 * @param id Long : l'Id de l'utilisateur
+	 * @return Utilisateur :
+	 */
+	public Utilisateur consulter(Long id);
 }
