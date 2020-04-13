@@ -2,6 +2,7 @@ package com.oc.escalade.entities;
 
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -37,6 +38,8 @@ public class Site implements Serializable
 	private int nbreRelais;
 	private String cotationMini;
 	private String cotationMaxi;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datePublication;
 	
 	@OneToMany(mappedBy="site")
 	private Collection<Commentaire> commentaires;
@@ -222,6 +225,16 @@ public class Site implements Serializable
 	public void setCotationMaxi(String cotationMaxi)
 	{
 		this.cotationMaxi = cotationMaxi;
+	}
+
+	public Date getDatePublication()
+	{
+		return datePublication;
+	}
+
+	public void setDatePublication(Date datePublication)
+	{
+		this.datePublication = datePublication;
 	}
 
 	@Override

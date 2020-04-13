@@ -1,6 +1,7 @@
 package com.oc.escalade.service;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,8 +34,7 @@ public class SiteServiceImpl implements SiteService
 	}
 	
 	@Override
-	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, 
-			int nombreSecteurs, int nombreVoies)
+	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, int nombreSecteurs, int nombreVoies)
 	{
 		String secteurs = nombreSecteurs > 0 ? String.valueOf(nombreSecteurs) : null;
 		String voies = nombreVoies > 0 ? String.valueOf(nombreVoies) : null;
@@ -42,6 +42,11 @@ public class SiteServiceImpl implements SiteService
 		return siteRepository.findAllByElements(nom, commune, departement, pays, cotation, secteurs, voies);
 	}
 	
+	@Override
+	public Collection<Site> listerSites()
+	{
+		return siteRepository.findAll();
+	}
 	@Override
 	@Transactional
 	public Site publierSite(Site site, Long auteurId) {
@@ -58,6 +63,7 @@ public class SiteServiceImpl implements SiteService
 		site.setAuteur(utilisateur.get());
 		
 		site.setTag(false);
+		site.setDatePublication(new Date());
 		
 		// sauvegarder et retourner le site
 		return siteRepository.save(site);

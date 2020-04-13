@@ -38,4 +38,10 @@ public interface SiteService
 	 * @param id Long : L'id du site
 	 */
 	public Site taguer(Long id); // F6
+
+	/**
+	 * Retourne tous les sites
+	 * @return
+	 */
+	public Collection<Site> listerSites();
 }
