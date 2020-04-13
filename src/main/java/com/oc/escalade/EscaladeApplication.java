@@ -43,22 +43,12 @@ public class EscaladeApplication implements CommandLineRunner
 	{
 		// Utilisateur
 		Utilisateur utilisateur = utilisateurService.inscription("email", "password", "Nom", "prenom", RoleEnum.MEMBRE);
-		System.out.println(utilisateur.getEmail());
-		
-		utilisateur = utilisateurService.consulter("email");
-		System.out.println(utilisateur.getEmail());
-		System.out.println(utilisateur.getRole().value());
+		utilisateur = utilisateurService.inscription("moi", "password", "Moi", "surMoi", RoleEnum.ADMINISTRATEUR);
 		
 		// Site		
 		Site site = siteService.publierSite(new Site("Site 1", "Un jolie site", "Valence", "Drôme", "France", 44.5, 5.5), utilisateur.getId());
-		System.out.println(site.getNom());
-		
-		Site nouveauSite = siteService.consulterSite(1L);
-		System.out.println(nouveauSite.getNom());
-		
+				
 		siteService.taguer(1L);
-		site = siteService.consulterSite(1L);
-		System.out.println(site.isTag() ? "Tagué" : "Non tagué");
 		
 		site = new Site("Site 2", "Un autre jolie site", "Romans", "Drôme", "France", 44.7, 5.6);
 		site.setNbreSecteurs(3);
@@ -67,27 +57,9 @@ public class EscaladeApplication implements CommandLineRunner
 		site.setNbreRelais(16);
 		site.setCotationMini("3b");
 		site.setCotationMaxi("9c");
-		nouveauSite = siteService.publierSite(site, utilisateur.getId());
-		System.out.println(nouveauSite.getDescription());
-
-		Collection<Site> sites = siteService.rechercherSites(null, null, null, "France", null, 0, 0);
-		for (Site site2 : sites)
-		{
-			System.out.println(site2.getCommune());
-		}
+		siteService.publierSite(site, utilisateur.getId());
 		
-		sites = siteService.rechercherSites(null, null, null, null, "4a", 0, 0);
-		for (Site site2 : sites)
-		{
-			System.out.println(site2.getCommune());
-		}
-		
-		sites = siteService.rechercherSites(null, null, null, null, null, 3, 0);
-		for (Site site2 : sites)
-		{
-			System.out.println(site2.getCommune());
-		}
-		
+		/*
 		// Commentaire
 		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site.getId(), utilisateur.getId());
 		System.out.println(commentaire.getContenu());
@@ -101,5 +73,6 @@ public class EscaladeApplication implements CommandLineRunner
 		// Topo
 		Topo topo = topoService.enregistrerTopo(new Topo("Le super Topo", "La région du sud", "Ce topo décrit un topo du sud"), 1L);
 		System.out.println(topo.getDecription());
+		*/
 	}
 }
