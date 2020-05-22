@@ -168,7 +168,20 @@ public class SiteController
 	@GetMapping("/membre/taguerSite/{id}")
 	public String taguerSite(Model model, @PathVariable Long id)
 	{
-		throw new NotYetImplementedException("Taguer un site");
+		Site site = null;
+		try
+		{
+			site = siteService.taguer(id);
+		}
+		catch (EscaladeException e)
+		{
+			model.addAttribute("exceptionMessage", e);
+			return "/theme/error";
+		}
+		
+		model.addAttribute("site", site);
+		
+		return "redirect:/public/detailSite/" + id;
 	}
 	
 	@GetMapping("/public/rechercherSiteForm")

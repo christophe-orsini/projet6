@@ -12,6 +12,13 @@
 		<div class="row">
 			<div class="col">
 				<p class="h3">Détail du site N° <c:out value="${site.id}" />
+				<sec:authorize access="hasAnyRole('ROLE_MEMBRE', 'ROLE_ADMINISTRATEUR')">
+					<c:set var="buttonContent" value="Taguer" scope="page" />
+					<c:if test="${site.tag == true}">
+						<c:set var="buttonContent" value="Retirer le tag" scope="page" />
+					</c:if>
+					<a class="btn btn-primary" href="/membre/taguerSite/${site.id}"><c:out value="${buttonContent}" /></a>
+				</sec:authorize>
 				<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')">
 					<a class="btn btn-primary" href="/inscrit/modifierSite/${site.id}">Modifier</a>
 				</sec:authorize></p>

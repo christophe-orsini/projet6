@@ -122,11 +122,8 @@ public class SiteServiceImpl implements SiteService
 			throw new EscaladeException("Site introuvable");
 		}
 	
-		if (!site.get().isTag())
-		{
-			site.get().setTag(true);
-			siteRepository.save(site.get());
-		}
+		site.get().setTag(!site.get().isTag());
+		siteRepository.save(site.get());
 		
 		return site.get();
 	}
