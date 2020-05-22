@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Range;
 
 /**
  * Lieu de grimpe composé d'un ou plusieurs secteur(s)
@@ -15,21 +16,25 @@ import javax.validation.constraints.NotNull;
 
 public class Site implements Serializable
 {
-	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique = true, nullable = false)
+	@NotEmpty(message="Le nom du site est obligatoire")
 	private String nom;
 	private String description;
-	@NotNull
+	@Column(nullable = false)
+	@NotEmpty(message="La commune est obligatoire")
 	private String commune;
-	@NotNull
+	@Column(nullable = false)
+	@NotEmpty(message="Le département est obligatoire")
 	private String departement;
 	private String pays;
-	@NotNull
+	@Column(nullable = false)
+	@Range(min=-90, max=90, message="Cette latitude est impossible")
 	private double latitude;
-	@NotNull
+	@Column(nullable = false)
+	@Range(min=-180, max=180, message="Cette longitude est impossible")
 	private double longitude;
 	private boolean tag; // marqué par l'administrateur
 	private int nbreSecteurs;

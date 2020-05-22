@@ -67,7 +67,7 @@
 						<input class="form-control form-control-sm" type="text" name="cotationMaxi" id="cotationMaxi" 
 							value="${site.cotationMaxi}" size="3" /><br/>
 					</div>
-					<input class="btn btn-primary" type="submit" value="Publier" />
+					<input class="btn btn-primary" type="submit" name="submit" value="Publier" />
 				</form>
 			</div>
 		</div>

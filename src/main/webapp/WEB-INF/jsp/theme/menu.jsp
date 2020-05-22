@@ -19,7 +19,7 @@
 	  			<a class="nav-link" href="/public/listeSites">Liste des sites</a>
 	  			<a class="nav-link" href="/inscrit/listeSitesUtilisateur">Liste de vos sites</a>
 	  			<a class="nav-link" href="/public/rechercheSite">Rechercher un site</a>
-	  			<a class="nav-link" href="/inscrit/publierSite">Publier un site</a>
+	  			<a class="nav-link" href="/inscrit/creerSite">Publier un site</a>
 	  		</div>
 		</div>
 		<div class="dropdown">

@@ -5,13 +5,15 @@ import java.util.Collection;
 import javax.validation.Valid;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import com.oc.escalade.entities.Commentaire;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.service.CommentaireService;
@@ -73,59 +75,32 @@ public class SiteController
 		throw new NotYetImplementedException("Rechercher des sites");
 	} 
 	
-	@GetMapping("/inscrit/publierSite")
-	public String publierSite(Model model)
+	@RequestMapping(value="/inscrit/creerSite", method = {RequestMethod.GET, RequestMethod.POST})
+	public String creerSite(@Valid Site site, BindingResult bindingResult, Model model,
+			Principal utilisateur, @Param("submit") String submit)
 	{
-		return "site/creerSite";
-	}
-	
-//	@PostMapping("/inscrit/creerSite")
-//	public String creerSite(@ModelAttribute("site") Site site, Model model, Principal utilisateur)
-	@PostMapping("/inscrit/creerSite")
-	public String creerSite(@Valid Site site, BindingResult bindingResult, Model model, Principal utilisateur)
-	{
-		String message = "";
-		boolean error = false;
-				
-		// verifier si le nom n'est pas null
-		String nom = site.getNom();
-		if (nom == null || nom.equals(""))
+		if (submit == null) // premier appel (GET)
 		{
-			message += "Le nom est obligatoire <br />";
-			error = true;
-		}
-		// verifier si la commune n'est pas nulle
-		String commune = site.getCommune();
-		if (commune == null || commune.equals(""))
-		{
-			message += "La commune est obligatoire <br />";
-			error = true;
-		}
-		// verifier si le departement n'est pas null
-		String departement = site.getDepartement();
-		if (departement == null || commune.equals(""))
-		{
-			message += "Le departement est obligatoire <br />";
-			error = true;
-		}
-		// verifier si la latitude n'est pas nulle
-		double latitude = site.getLatitude();
-		if (latitude == 0)
-		{
-			message += "La latitude est obligatoire <br />";
-			error = true;
-		}
-		// verifier si la longitude n'est pas nulle
-		double longitude = site.getLongitude();
-		if (longitude == 0)
-		{
-			message += "La latitude est obligatoire <br />";
-			error = true;
+			return "site/creerSite";
 		}
 		
-		// enregistrer le site
-		if (!error)
+		// traitement formulaire (POST)
+		String message = "";
+		if (bindingResult.hasErrors())
 		{
+			for (ObjectError error : bindingResult.getAllErrors())
+			{
+				if (error.getDefaultMessage() != null)
+				{
+					message += error.getDefaultMessage() + "<br />";
+				}
+			}
+			model.addAttribute("exceptionMessage", message);
+			return "site/creerSite";
+		}
+		else
+		{
+			// enregistrer le site
 			try
 			{
 				siteService.publierSite(site, utilisateur.getName());
