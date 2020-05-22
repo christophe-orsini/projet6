@@ -2,9 +2,9 @@ package com.oc.escalade.entities;
 
 public enum RoleEnum
 {
-	UTILISATEUR (1),
-	MEMBRE (2),
-	ADMINISTRATEUR (4);
+	ROLE_UTILISATEUR (1),
+	ROLE_MEMBRE (2),
+	ROLE_ADMINISTRATEUR (4);
 
 	private int value;
 	

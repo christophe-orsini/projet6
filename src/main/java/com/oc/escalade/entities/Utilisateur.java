@@ -1,7 +1,6 @@
 package com.oc.escalade.entities;
 
 import java.util.Collection;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -13,6 +12,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Utilisateur
 {
+	@SuppressWarnings("unused")
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
@@ -24,8 +26,8 @@ public class Utilisateur
 	private String nom;
 	private String prenom;
 	@NotNull
-	@Enumerated
-	private RoleEnum role = RoleEnum.UTILISATEUR;
+	@Enumerated(EnumType.STRING)
+	private RoleEnum role = RoleEnum.ROLE_UTILISATEUR;
 	
 	@OneToMany(mappedBy="proprietaire")
 	private Collection<Topo> topos; 
@@ -33,26 +35,36 @@ public class Utilisateur
 	private Collection<Site> sites; // déposés
 	@OneToMany(mappedBy="auteur")
 	private Collection<Commentaire> commentaires;
-	
+	    
 	public Utilisateur() {
 		super();
-		
 	}
 	
 	public Utilisateur(@NotNull String email, @NotNull String password) {
 		super();
-		this.email = email;
-		this.password = password;
+		// TODO pas de setters
+		setEmail(email);
+		setPassword(password);
 	}
 	
 	public Utilisateur(@NotNull String email, @NotNull String password, String nom, String prenom, @NotNull RoleEnum role)
 	{
 		super();
-		this.email = email;
-		this.password = password;
-		this.nom = nom;
-		this.prenom = prenom;
-		this.role = role;
+		setEmail(email);
+		setPassword(password);
+		setNom(nom);
+		setPrenom(prenom);
+		setRole(role);
+	}
+
+	public Long getId()
+	{
+		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
 	}
 
 	public String getEmail() {
@@ -71,6 +83,32 @@ public class Utilisateur
 		this.password = password;
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getPrenom() {
+		return prenom;
+	}
+
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+	
+	public RoleEnum getRole()
+	{
+		return role;
+	}
+
+	public void setRole(RoleEnum role)
+	{
+		this.role = role;
+	}
+	
 	public Collection<Site> getSites() {
 		return sites;
 	}
@@ -87,42 +125,6 @@ public class Utilisateur
 		this.commentaires = commentaires;
 	}
 
-	public String getNom() {
-		return nom;
-	}
-
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
-
-	public String getPrenom() {
-		return prenom;
-	}
-
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
-
-	public Long getId()
-	{
-		return id;
-	}
-
-	public void setId(Long id)
-	{
-		this.id = id;
-	}
-
-	public RoleEnum getRole()
-	{
-		return role;
-	}
-
-	public void setRole(RoleEnum role)
-	{
-		this.role = role;
-	}
-
 	public Collection<Topo> getTopos()
 	{
 		return topos;
@@ -137,5 +139,4 @@ public class Utilisateur
 	public String toString() {
 		return "Utilisateur [nom=" + nom + ", prenom=" + prenom + "]";
 	}
-	
 }

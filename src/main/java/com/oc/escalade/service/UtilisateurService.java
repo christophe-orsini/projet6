@@ -1,7 +1,10 @@
 package com.oc.escalade.service;
 
+import java.util.Collection;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
+import com.oc.escalade.tools.EscaladeException;
 
 public interface UtilisateurService
 {
@@ -20,11 +23,16 @@ public interface UtilisateurService
 	 * @param email String : l'email de l'utilisateur
 	 * @return Utilisateur :
 	 */
-	public Utilisateur consulter(String email);
+	public Utilisateur consulter(String email) throws EscaladeException;
 	/**
 	 * Retourne un utilisateur existant
 	 * @param id Long : l'Id de l'utilisateur
 	 * @return Utilisateur :
 	 */
 	public Utilisateur consulter(Long id);
+	/**
+	 * Retourne la liste des utilisateurs
+	 * @return 
+	 */
+	public Collection<Utilisateur> lister();
 }
