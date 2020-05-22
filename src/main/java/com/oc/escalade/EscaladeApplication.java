@@ -1,19 +1,16 @@
 package com.oc.escalade;
 
-import java.util.Collection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import com.oc.escalade.entities.Commentaire;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Site;
-import com.oc.escalade.entities.Topo;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.service.CommentaireService;
 import com.oc.escalade.service.SiteService;
-import com.oc.escalade.service.TopoService;
 import com.oc.escalade.service.UtilisateurService;
+import com.oc.escalade.tools.EscaladeException;
 
 @SpringBootApplication
 public class EscaladeApplication implements CommandLineRunner
@@ -24,9 +21,10 @@ public class EscaladeApplication implements CommandLineRunner
 	private SiteService siteService;
 	@Autowired
 	private CommentaireService commentaireService;
+	/*
 	@Autowired
 	private TopoService topoService;
-	
+	*/
 	public static void main(String[] args)
 	{
 		SpringApplication.run(EscaladeApplication.class, args);	
@@ -36,40 +34,56 @@ public class EscaladeApplication implements CommandLineRunner
 	@Override
 	public void run(String... args) throws Exception
 	{
-		Test();
+		//Test();
 	}
 	
 	private void Test()
 	{
 		// Utilisateur
-		Utilisateur utilisateur = utilisateurService.inscription("email", "password", "Nom", "prenom", RoleEnum.MEMBRE);
-		utilisateur = utilisateurService.inscription("moi", "password", "Moi", "surMoi", RoleEnum.ADMINISTRATEUR);
-		
-		// Site		
-		Site site = siteService.publierSite(new Site("Site 1", "Un jolie site", "Valence", "Drôme", "France", 44.5, 5.5), utilisateur.getId());
+		Utilisateur utilisateur = utilisateurService.inscription("admin", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
+		utilisateurService.inscription("member", "member", "Membre", "", RoleEnum.ROLE_MEMBRE);
+		utilisateurService.inscription("user", "user", "Utilisateur", "Inscrit", RoleEnum.ROLE_UTILISATEUR);
 				
-		siteService.taguer(1L);
+		// Site
+		for (int i = 1; i <20; i++)
+		{
+			String ville  = "Valence";
+			String utilisateurEmail = utilisateur.getEmail();
+			if (i % 2 == 0)
+			{
+				ville  = "Romans";
+				utilisateurEmail = "user";
+			}
+			
+			String nom = "Site " + i;
+			Site site = new Site(nom, "Un jolie site", ville, "Drôme", "France", 44.5, 5.5);
+			site.setNbreSecteurs(3);
+			site.setNbreVoies(8);
+			site.setNbreLongueurs(21);
+			site.setNbreRelais(16);
+			site.setCotationMini("3b");
+			site.setCotationMaxi("9c");
+			try
+			{	
+				siteService.publierSite(site, utilisateurEmail);
+			}
+			catch (EscaladeException e)
+			{
+				// TODO: handle exception
+			}
+			if (i % 2 == 0)
+			{
+				siteService.taguer(site.getId());
+			}
+		}
 		
-		site = new Site("Site 2", "Un autre jolie site", "Romans", "Drôme", "France", 44.7, 5.6);
-		site.setNbreSecteurs(3);
-		site.setNbreVoies(8);
-		site.setNbreLongueurs(21);
-		site.setNbreRelais(16);
-		site.setCotationMini("3b");
-		site.setCotationMaxi("9c");
-		siteService.publierSite(site, utilisateur.getId());
-		
-		/*
 		// Commentaire
-		Commentaire commentaire = commentaireService.commenter("Voici un commentaire",  site.getId(), utilisateur.getId());
-		System.out.println(commentaire.getContenu());
-		
-		Commentaire commentaire2 = commentaireService.lireCommentaire(1L);
-		System.out.println(commentaire2.getAuteur().getEmail());
-		
-		commentaire = commentaireService.modifierCommentaire(1L, "Changement de commentaire");
-		System.out.println(commentaire.getContenu());
-		
+		for (int i=1; i<20; i++)
+		{
+			String message = "Voici le commentaire N° " + i;
+			commentaireService.commenter(message, 1L, utilisateur.getId());
+		}
+		/*
 		// Topo
 		Topo topo = topoService.enregistrerTopo(new Topo("Le super Topo", "La région du sud", "Ce topo décrit un topo du sud"), 1L);
 		System.out.println(topo.getDecription());
