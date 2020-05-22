@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.oc.escalade.entities.Site;
+import com.oc.escalade.entities.Utilisateur;
 
 @Repository
 public interface SiteRepository extends JpaRepository<Site, Long>
@@ -22,4 +23,6 @@ public interface SiteRepository extends JpaRepository<Site, Long>
 			+ " ORDER BY pays, departement, commune, nom")
 	public Collection<Site> findAllByElements(@Param("nom") String nom, @Param("commune") String commune, @Param("departement") String departement,
 			@Param("pays") String pays, @Param("cotation") String cotation, @Param("secteurs") String nombreSecteurs, @Param("voies") String nombreVoies);
+
+	public Collection<Site> findAllByAuteur(Utilisateur utilisateur);
 }
