@@ -12,6 +12,7 @@ import com.oc.escalade.dao.UtilisateurRepository;
 import com.oc.escalade.entities.Commentaire;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
+import com.oc.escalade.tools.EscaladeException;
 
 @Service
 public class CommentaireServiceImpl implements CommentaireService
@@ -22,19 +23,20 @@ public class CommentaireServiceImpl implements CommentaireService
 	
 	@Override
 	@Transactional
-	public Commentaire commenter(String commentaire, Long siteId, Long auteurId) {
+	public Commentaire commenter(String commentaire, Long siteId, Long auteurId) throws EscaladeException
+	{
 		// verification de l'existence de l'utilisateur
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(auteurId);
 		if (!utilisateur.isPresent())
 		{
-			throw new RuntimeException("L'utilisateur n'existe pas");
+			throw new EscaladeException("L'utilisateur n'existe pas");
 		}
 		
 		// verification de l'existence du site
 		Optional<Site> site = siteRepository.findById(siteId);
 		if (!site.isPresent())
 		{
-			throw new RuntimeException("Le site n'existe pas");
+			throw new EscaladeException("Le site n'existe pas");
 		}
 		
 		// création et MàJ du commentaire
@@ -51,13 +53,14 @@ public class CommentaireServiceImpl implements CommentaireService
 	
 	@Override
 	@Transactional
-	public Commentaire modifierCommentaire(Long commentaireId, String texte) {
+	public Commentaire modifierCommentaire(Long commentaireId, String texte)  throws EscaladeException
+	{
 		// verification de l'existence de l'utilisateur
 		Optional<Commentaire> commentaireLocal = commentaireRepository.findById(commentaireId);
 			
 		if (!commentaireLocal.isPresent())
 		{
-			throw new RuntimeException("Le commentaire n'existe pas");
+			throw new EscaladeException("Le commentaire n'existe pas");
 		}
 		
 		// changement du commentaire
@@ -68,14 +71,14 @@ public class CommentaireServiceImpl implements CommentaireService
 	}
 
 	@Override
-	public Commentaire lireCommentaire(Long id)
+	public Commentaire lireCommentaire(Long id) throws EscaladeException
 	{
 		/// verification de l'existence de l'utilisateur
 		Optional<Commentaire> commentaire = commentaireRepository.findById(id);
 			
 		if (!commentaire.isPresent())
 		{
-			throw new RuntimeException("Le commentaire n'existe pas");
+			throw new EscaladeException("Le commentaire n'existe pas");
 		}
 		return commentaire.get();
 	}

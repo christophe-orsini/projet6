@@ -2,6 +2,7 @@ package com.oc.escalade.service;
 
 import java.util.Collection;
 import com.oc.escalade.entities.Commentaire;
+import com.oc.escalade.tools.EscaladeException;
 
 public interface CommentaireService
 {
@@ -12,20 +13,20 @@ public interface CommentaireService
 	 * @param auteur Utilisateur : L'auteur du commentaire
 	 * @retrun Commentaire : Le commentaire nouvellement créé
 	 */
-	public Commentaire commenter(String commentaire, Long siteId, Long auteurId);
+	public Commentaire commenter(String commentaire, Long siteId, Long auteurId) throws EscaladeException;
 	
 	/**
 	 * Modifier un commentaire
 	 * @param commentaire Commentaire : Le commentaire à modifier
 	 * @rerurn Commentaire : Le commentaire modifié
 	 */
-	public Commentaire modifierCommentaire(Long commentaireId, String texte);
+	public Commentaire modifierCommentaire(Long commentaireId, String texte)  throws EscaladeException;
 	/**
 	 * Retourne un commentaire
 	 * @param id Long : L'id du commentaire
 	 * @return Commentaire : Le commentaire
 	 */
-	public Commentaire lireCommentaire(Long id);
+	public Commentaire lireCommentaire(Long id)  throws EscaladeException;
 
 	/**
 	 * Retourne la lisyte des commentaires pour un site

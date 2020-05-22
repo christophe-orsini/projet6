@@ -88,7 +88,14 @@ public class EscaladeApplication implements CommandLineRunner
 		for (int i=1; i<20; i++)
 		{
 			String message = "Voici le commentaire N° " + i;
-			commentaireService.commenter(message, 1L, utilisateur.getId());
+			try
+			{
+				commentaireService.commenter(message, 1L, utilisateur.getId());
+			}
+			catch (EscaladeException e)
+			{
+				// TODO: handle exception
+			}
 		}
 		/*
 		// Topo

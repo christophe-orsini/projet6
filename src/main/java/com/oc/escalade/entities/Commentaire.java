@@ -32,12 +32,12 @@ public class Commentaire
 	
 	public Commentaire() {
 		super();
-		
 	}
 
 	public Commentaire(Date datePublication, String contenu, Site site, Utilisateur auteur) {
 		super();
 		this.datePublication = datePublication;
+		this.dateModification = datePublication;
 		this.contenu = contenu;
 		this.site = site;
 		this.auteur = auteur;
