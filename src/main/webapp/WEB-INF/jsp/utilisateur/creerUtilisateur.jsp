@@ -14,7 +14,7 @@
 		</div>
 		<div class="row">
 			<div class="col-lg-5 col">
-				<form action="/public/creerUtilisateur" method="post">
+				<form action="/inscription" method="post">
 					<div class="form-group">
 						<label for="email">Email</label> 
 						<input type="text" class="form-control" name="email" id="email" value="${utilisateur.email}" />
@@ -27,7 +27,7 @@
 						<label for="prenom">Prénom</label>
 						<input type="text" class="form-control" name="prenom" id="prenom" value="${utilisateur.prenom}"/>
 					</div>
-					<input class="btn btn-primary" type="submit" value="Enregistrer">
+					<input class="btn btn-primary" type="submit" name="submit" value="Enregistrer">
 				</form>
 			</div>
 		</div>

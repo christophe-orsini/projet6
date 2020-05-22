@@ -1,16 +1,22 @@
 package com.oc.escalade.controllers;
 
+import java.security.Principal;
 import java.util.Collection;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.service.UtilisateurService;
+import com.oc.escalade.tools.EscaladeException;
 
 @Controller
 public class UtilisateurController
@@ -19,51 +25,55 @@ public class UtilisateurController
 	
 	@Autowired
 	private UtilisateurService utilisateurService;
-	
-	@GetMapping("/inscription")
-	public String inscription(Model model)
-	{
-		return "utilisateur/creerUtilisateur";
-	}
 
-	@PostMapping("/public/creerUtilisateur")
-	public String creerUtilisateur(@ModelAttribute("utilisateur") Utilisateur utilisateur, Model model)
+	@RequestMapping(value="/inscription", method = {RequestMethod.GET, RequestMethod.POST})
+	public String creerUtilisateur(@Valid Utilisateur utilisateur, BindingResult bindingResult, Model model,
+			Principal connectedUser, @Param("submit") String submit)
 	{
-		String message = "";
-		boolean error = false;
+		if (submit == null) // premier appel (GET)
+		{
+			return "utilisateur/creerUtilisateur";
+		}
 		
+		// traitement formulaire (POST)
 		//check format email
 		String email = utilisateur.getEmail().toLowerCase();
 		String pattern = "^[a-z]+([a-z0-9])*@([a-z0-9])*\\.([a-z]){2,4}";
 		if (!email.matches(pattern))
 		{
-			message += "L'email n'est pas conforme<br />";
-			error = true;
+			bindingResult.rejectValue("email", "email.format", "Le format de l'email n'est pas valide");
 		}
-		// check password
-		String password = utilisateur.getPassword();
-		if (password.length() < 4)
+		if (utilisateur.getPassword().length() < 4 || utilisateur.getPassword().length() > 8)
 		{
-			message += "Le mot de passe doit avoir au minimum 4 caratères<br />";
-			error = true;
-		}
-		// check nom present
-		String nom = utilisateur.getNom();
-		if (nom == null || nom.trim().equals(""))
-		{
-			message += "Le nom est obligatoire <br />";
-			error = true;
+			bindingResult.rejectValue("password", "password.size", "Le mot de passe de avoir entre 4 et 8 caractères");
 		}
 		
-		// enregistrer l'utilisateur
-		if (!error)
+		String message = "";
+		if (bindingResult.hasErrors())
 		{
+			for (ObjectError error : bindingResult.getAllErrors())
+			{
+				if (error.getDefaultMessage() != null)
+				{
+					message += error.getDefaultMessage() + "<br />";
+				}
+			}
+			model.addAttribute("exceptionMessage", message);
+			return "utilisateur/creerUtilisateur";
+		}
+		else
+		{
+			// enregistrer le site
 			try
 			{
-				utilisateurService.inscription(email, password, nom, utilisateur.getPrenom(), RoleEnum.ROLE_UTILISATEUR);
-				return "redirect:/";
+				Utilisateur nouveau = utilisateurService.inscription(utilisateur.getEmail(), utilisateur.getPassword(), 
+						utilisateur.getNom(), utilisateur.getPrenom(), RoleEnum.ROLE_UTILISATEUR);
+				
+				model.addAttribute("login", nouveau.getEmail());
+				
+				return "utilisateur/messageInscription";
 			}
-			catch (RuntimeException e)
+			catch (EscaladeException e)
 			{
 				message += e.getMessage();
 			}
@@ -71,26 +81,25 @@ public class UtilisateurController
 		
 		// si erreurs
 		model.addAttribute("exceptionMessage", message);
-		// model.addAttribute("titre", "Inscription");
-		// model.addAttribute("create", true);
+		
 		return "utilisateur/creerUtilisateur";
 	}
 
 	@GetMapping("/inscrit/detailUtilisateur/{id}")
-	public String consulterUtilisateur(Model model, @PathVariable Long id) throws RuntimeException
+	public String consulterUtilisateur(Model model, @PathVariable Long id)
 	{
 		try
 		{
 			Utilisateur utilisateur = utilisateurService.consulter(id);
 			
 			model.addAttribute("utilisateur", utilisateur);
+			return "utilisateur/detailUtilisateur";
 		}
-		catch (RuntimeException e)
+		catch (EscaladeException e)
 		{
-			model.addAttribute("exceptionMessage", e.getMessage());
+			model.addAttribute("exceptionMessage", e);
+			return "/theme/error";
 		}
-		
-		return "utilisateur/detailUtilisateur";
 	}
 	
 	@GetMapping("/inscrit/listeUtilisateurs")

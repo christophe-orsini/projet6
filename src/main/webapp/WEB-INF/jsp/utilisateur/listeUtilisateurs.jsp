@@ -29,7 +29,7 @@
 					<td><a href="detailUtilisateur/${utilisateur.id}">${utilisateur.email}</a></td>
 					<td>${utilisateur.nom}</td>
 					<td>${utilisateur.prenom}</td>
-					<td>${utilisateur.role}</td>
+					<td>${utilisateur.role.toString()}</td>					
 				</tr>
 				</c:forEach>
 			</tbody>

@@ -19,15 +19,14 @@ public class UtilisateurServiceImpl implements UtilisateurService
 	private BCryptPasswordEncoder passwordencoder;
 	
 	@Override
-	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role)
+	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role) throws EscaladeException
 	{
 		// verifier si email existe
 		if (utilisateurRepository.findByEmailIgnoreCase(email).isPresent())
 		{
-			throw new RuntimeException("L'utilisateur " + email + " existe déjà");
+			throw new EscaladeException("L'utilisateur " + email + " existe déjà");
 		}
 		
-		// TODO chiffrer le mot de passe
 		String passwordEncoded = passwordencoder.encode(password);
 		
 		// créer l'utilisateur
@@ -51,13 +50,13 @@ public class UtilisateurServiceImpl implements UtilisateurService
 	}
 	
 	@Override
-	public Utilisateur consulter(Long id)
+	public Utilisateur consulter(Long id) throws EscaladeException
 	{
 		Optional<Utilisateur> utilisateurOpt = utilisateurRepository.findById(id);
 		// verifier si email existe
 		if (!utilisateurOpt.isPresent())
 		{
-			throw new RuntimeException("L'utilisateur N° " + id + " n'existe pas");
+			throw new EscaladeException("L'utilisateur N° " + id + " n'existe pas");
 		}
 		
 		return utilisateurOpt.get();		

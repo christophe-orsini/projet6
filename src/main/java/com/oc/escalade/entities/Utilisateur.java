@@ -2,6 +2,7 @@ package com.oc.escalade.entities;
 
 import java.util.Collection;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -18,14 +19,15 @@ public class Utilisateur
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
 	@Column(unique = true, updatable = false, nullable = false)
+	@NotEmpty(message="L'email est obligatoire")
 	private String email; // login
-	@NotNull
+	@NotEmpty(message="Le mot de passe est obligatoire")
+	@Column(nullable = false)
 	private String password;
 	private String nom;
 	private String prenom;
-	@NotNull
+	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private RoleEnum role = RoleEnum.ROLE_UTILISATEUR;
 	
@@ -43,18 +45,18 @@ public class Utilisateur
 	public Utilisateur(@NotNull String email, @NotNull String password) {
 		super();
 		// TODO pas de setters
-		setEmail(email);
-		setPassword(password);
+		this.email = email;
+		this.password = password;
 	}
 	
 	public Utilisateur(@NotNull String email, @NotNull String password, String nom, String prenom, @NotNull RoleEnum role)
 	{
 		super();
-		setEmail(email);
-		setPassword(password);
-		setNom(nom);
-		setPrenom(prenom);
-		setRole(role);
+		this.email = email;
+		this.password = password;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.role = role;
 	}
 
 	public Long getId()

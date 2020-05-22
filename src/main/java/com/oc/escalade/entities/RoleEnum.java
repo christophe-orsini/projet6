@@ -17,4 +17,20 @@ public enum RoleEnum
 	{
 		return value;
 	}
+	
+	@Override
+	public String toString()
+	{
+		switch(value)
+		{
+			case 1:
+				return "Utilisateur";
+			case 2:
+				return "Membre de l'association";
+			case 4:
+				return "Administrateur du site";
+			default:
+				return "Inconnu";
+		}
+	}
 }

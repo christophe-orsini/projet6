@@ -37,13 +37,14 @@ public class EscaladeApplication implements CommandLineRunner
 		//Test();
 	}
 	
-	private void Test()
+	private void Test() throws EscaladeException
 	{
 		// Utilisateur
-		Utilisateur utilisateur = utilisateurService.inscription("admin", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
+		Utilisateur utilisateur = null;
+		utilisateur = utilisateurService.inscription("admin", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
 		utilisateurService.inscription("member", "member", "Membre", "", RoleEnum.ROLE_MEMBRE);
 		utilisateurService.inscription("user", "user", "Utilisateur", "Inscrit", RoleEnum.ROLE_UTILISATEUR);
-				
+		
 		// Site
 		for (int i = 1; i <20; i++)
 		{
@@ -63,24 +64,12 @@ public class EscaladeApplication implements CommandLineRunner
 			site.setNbreRelais(16);
 			site.setCotationMini(i%3 + 3 + "b");
 			site.setCotationMaxi(i%4 + 5 + "c");
-			try
-			{	
-				siteService.publierSite(site, utilisateurEmail);
-			}
-			catch (EscaladeException e)
-			{
-				// TODO: handle exception
-			}
+			
+			siteService.publierSite(site, utilisateurEmail);
+			
 			if (i % 3 == 0)
 			{
-				try
-				{
-					siteService.taguer(site.getId());
-				}
-				catch (EscaladeException e)
-				{
-					// TODO: handle exception
-				}
+				siteService.taguer(site.getId());
 			}
 		}
 		
@@ -88,14 +77,7 @@ public class EscaladeApplication implements CommandLineRunner
 		for (int i=1; i<20; i++)
 		{
 			String message = "Voici le commentaire N° " + i;
-			try
-			{
-				commentaireService.commenter(message, 1L, utilisateur.getId());
-			}
-			catch (EscaladeException e)
-			{
-				// TODO: handle exception
-			}
+			commentaireService.commenter(message, 1L, utilisateur.getId());
 		}
 		/*
 		// Topo

@@ -16,7 +16,7 @@ public interface UtilisateurService
 	 * @param role RoleEnum : le role de l'utilisateur {@link RoleEnum}
 	 * @return Utilisateur : l'utilisateur créé
 	 */
-	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role); // F3
+	public Utilisateur inscription(String email, String password, String nom, String prenom, RoleEnum role) throws EscaladeException; // F3
 	/**
 	 * Retourne un utilisateur existant
 	 * @param email String : l'email de l'utilisateur
@@ -28,7 +28,7 @@ public interface UtilisateurService
 	 * @param id Long : l'Id de l'utilisateur
 	 * @return Utilisateur :
 	 */
-	public Utilisateur consulter(Long id);
+	public Utilisateur consulter(Long id) throws EscaladeException;
 	/**
 	 * Retourne la liste des utilisateurs
 	 * @return 
