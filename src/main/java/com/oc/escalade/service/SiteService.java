@@ -12,7 +12,7 @@ public interface SiteService
 	 * @param id Long : L'id du site
 	 * @return Site : Le site trouvé
 	 */
-	public Site consulterSite(Long id); // F1
+	public Site consulterSite(Long id) throws EscaladeException; // F1
 	
 	/**
 	 * Permet de retrouver une liste de sites en fonction de plusieurs citères
@@ -35,10 +35,18 @@ public interface SiteService
 	 */
 	public Site publierSite(Site site, String auteur) throws EscaladeException; // F4
 	/**
+	 * Modification d'un site existant
+	 * @param site
+	 * @param auteur
+	 * @return
+	 * @throws EscaladeException
+	 */
+	public Site modifierSite(Site site) throws EscaladeException;
+	/**
 	 * Permet de taguer un site comme Officiel
 	 * @param id Long : L'id du site
 	 */
-	public Site taguer(Long id); // F6
+	public Site taguer(Long id) throws EscaladeException; // F6
 
 	/**
 	 * Retourne tous les sites
@@ -46,6 +54,10 @@ public interface SiteService
 	 */
 	public Collection<Site> lister();
 	
+	/**
+	 * Retourne tous les site d'un utilisateur
+	 * @param nom String : Login de l'utilisateur
+	 * @return
+	 */
 	public Collection<Site> listerParUtilisateur(String nom);
-	
 }

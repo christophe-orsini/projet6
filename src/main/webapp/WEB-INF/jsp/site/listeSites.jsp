@@ -36,7 +36,7 @@
 					<td>${site.description}</td>
 					<td><c:if test="${site.tag}">Oui</c:if></td>
 					<c:if test="${not empty utilisateur}">
-						<td><a class="btn btn-primary" href="/inscrit/modifiersite/${site.id}">Modifier</a></td>
+						<td><a class="btn btn-primary" href="/inscrit/modifierSite/${site.id}">Modifier</a></td>
 					</c:if>
 				</tr>
 				</c:forEach>

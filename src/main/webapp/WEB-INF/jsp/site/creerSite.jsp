@@ -16,7 +16,13 @@
 		</div>
 		<div class="row">
 			<div class="col">
-				<form action="/inscrit/creerSite" method="post">
+				<c:if test="${not empty update}">
+					<c:set var="path" value="/inscrit/modifierSite/${site.id}" scope="page"/>
+				</c:if>
+				<c:if test="${empty update}">
+					<c:set var="path" value="/inscrit/creerSite" scope="page"/>
+				</c:if>
+				<form action="${path}" method="post">
 					<div class="form-inline">
 						<label class="mr-3" for="nom">Nom :</label> 
 						<input class="form-control form-control-sm mr-3" type="text" name="nom" id="nom" value="${site.nom}" />
@@ -67,7 +73,12 @@
 						<input class="form-control form-control-sm" type="text" name="cotationMaxi" id="cotationMaxi" 
 							value="${site.cotationMaxi}" size="3" /><br/>
 					</div>
-					<input class="btn btn-primary" type="submit" name="submit" value="Publier" />
+					<c:if test="${not empty update}">
+						<input class="btn btn-primary" type="submit" name="submit" value=Enregistrer />
+					</c:if>
+					<c:if test="${empty update}">
+						<input class="btn btn-primary" type="submit" name="submit" value="Publier" />
+					</c:if>
 				</form>
 			</div>
 		</div>

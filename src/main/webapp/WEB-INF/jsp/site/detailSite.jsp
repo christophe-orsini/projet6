@@ -13,7 +13,7 @@
 			<div class="col">
 				<p class="h3">Détail du site N° <c:out value="${site.id}" />
 				<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')">
-					<a class="btn btn-primary" href="/inscrit/modifiersite/${site.id}">Modifier</a>
+					<a class="btn btn-primary" href="/inscrit/modifierSite/${site.id}">Modifier</a>
 				</sec:authorize></p>
 			</div>
 		</div>

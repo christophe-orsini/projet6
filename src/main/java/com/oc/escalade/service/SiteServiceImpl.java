@@ -22,13 +22,14 @@ public class SiteServiceImpl implements SiteService
 	private UtilisateurRepository utilisateurRepository;
 	
 	@Override
-	public Site consulterSite(Long id) {
+	public Site consulterSite(Long id) throws EscaladeException
+	{
 		Optional<Site> site = siteRepository.findById(id);
 		
 		// vérifier que le site existe
 		if (!site.isPresent())
 		{
-			throw new RuntimeException("Site introuvable");
+			throw new EscaladeException("Site introuvable");
 		}
 		
 		return site.get();
@@ -80,14 +81,45 @@ public class SiteServiceImpl implements SiteService
 	
 	@Override
 	@Transactional
-	public Site taguer(Long id)
+	public Site modifierSite(Site site) throws EscaladeException
+	{
+		// verification de l'existence du site
+		Optional<Site> findedSite = siteRepository.findById(site.getId());
+			
+		if (!findedSite.isPresent())
+		{
+			throw new EscaladeException("Le site  " + site.getNom() + " n'existe pas");
+		}
+		
+		// mise à jour des champs
+		findedSite.get().setNom(site.getNom());
+		findedSite.get().setDescription(site.getDescription());
+		findedSite.get().setCommune(site.getCommune());
+		findedSite.get().setDepartement(site.getDepartement());
+		findedSite.get().setPays(site.getPays());
+		findedSite.get().setLatitude(site.getLatitude());
+		findedSite.get().setLongitude(site.getLongitude());
+		findedSite.get().setNbreSecteurs(site.getNbreSecteurs());
+		findedSite.get().setNbreVoies(site.getNbreVoies());
+		findedSite.get().setNbreLongueurs(site.getNbreLongueurs());
+		findedSite.get().setNbreRelais(site.getNbreRelais());
+		findedSite.get().setCotationMini(site.getCotationMini());
+		findedSite.get().setCotationMaxi(site.getCotationMaxi());
+		
+		// sauvegarder et retourner le site
+		return siteRepository.save(findedSite.get());
+	}
+	
+	@Override
+	@Transactional
+	public Site taguer(Long id) throws EscaladeException
 	{
 		Optional<Site> site = siteRepository.findById(id);
 			
 		// vérifier que le site existe
 		if (!site.isPresent())
 		{
-			throw new RuntimeException("Site introuvable");
+			throw new EscaladeException("Site introuvable");
 		}
 	
 		if (!site.get().isTag())

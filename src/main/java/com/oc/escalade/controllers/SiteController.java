@@ -47,37 +47,28 @@ public class SiteController
 	@GetMapping("/public/detailSite/{id}")
 	public String consulterSite(Model model, @PathVariable Long id)
 	{	
+		Site site;
 		try
 		{
-			Site site = siteService.consulterSite(id);
-			Collection<Commentaire> commentaires = commentaireService.listeCommentaire(id);
+			 site = siteService.consulterSite(id);
 			
-			model.addAttribute("site", site);
-			model.addAttribute("commentaires",  commentaires);
 		}
-		catch (RuntimeException e)
+		catch (EscaladeException e)
 		{
-			model.addAttribute("exceptionMessage", e.getMessage());
+			model.addAttribute("exceptionMessage", e);
+			return "/theme/error";
 		}
+		
+		Collection<Commentaire> commentaires = commentaireService.listeCommentaire(id);
+		
+		model.addAttribute("site", site);
+		model.addAttribute("commentaires",  commentaires);
 		
 		return "site/detailSite";
 	}
 	
-	@GetMapping("/public/rechercherSiteForm")
-	public String rechercherSitesForm(Model model)
-	{
-		throw new NotYetImplementedException("Rechercher des sites");
-	} 
-	
-	@GetMapping("/public/rechercherSite/{id}")
-	public String rechercherSites(Model model, @PathVariable Long id)
-	{
-		throw new NotYetImplementedException("Rechercher des sites");
-	} 
-	
 	@RequestMapping(value="/inscrit/creerSite", method = {RequestMethod.GET, RequestMethod.POST})
-	public String creerSite(@Valid Site site, BindingResult bindingResult, Model model,
-			Principal utilisateur, @Param("submit") String submit)
+	public String creerSite(@Valid Site site, BindingResult bindingResult, Model model,	Principal utilisateur, @Param("submit") String submit)
 	{
 		if (submit == null) // premier appel (GET)
 		{
@@ -118,9 +109,77 @@ public class SiteController
 		return "site/creerSite";
 	}
 	
+	@RequestMapping(value="/inscrit/modifierSite/{id}", method = {RequestMethod.GET, RequestMethod.POST})
+	public String modifierSite(@Valid Site site, BindingResult bindingResult, Model model,	Principal utilisateur,
+			@PathVariable Long id, @Param("submit") String submit)
+	{
+		if (submit == null) // premier appel (GET)
+		{
+			try
+			{
+				site = siteService.consulterSite(id);
+			}
+			catch (EscaladeException e)
+			{
+				model.addAttribute("exceptionMessage", e);
+				return "/theme/error";
+			}
+			
+			model.addAttribute("site", site);
+			model.addAttribute("update", true);
+			
+			return "site/creerSite";
+		}
+		
+		// traitement formulaire (POST)
+		String message = "";
+		if (bindingResult.hasErrors())
+		{
+			for (ObjectError error : bindingResult.getAllErrors())
+			{
+				if (error.getDefaultMessage() != null)
+				{
+					message += error.getDefaultMessage() + "<br />";
+				}
+			}
+			model.addAttribute("exceptionMessage", message);
+			return "site/creerSite";
+		}
+		else
+		{
+			// enregistrer le site
+			try
+			{
+				siteService.modifierSite(site);
+				return "redirect:/public/listeSites";
+			}
+			catch (EscaladeException e)
+			{
+				message += e.getMessage();
+			}
+		}
+		
+		// si erreurs
+		model.addAttribute("exceptionMessage", message);
+		
+		return "site/creerSite";
+	}
+	
 	@GetMapping("/membre/taguerSite/{id}")
 	public String taguerSite(Model model, @PathVariable Long id)
 	{
 		throw new NotYetImplementedException("Taguer un site");
 	}
+	
+	@GetMapping("/public/rechercherSiteForm")
+	public String rechercherSitesForm(Model model)
+	{
+		throw new NotYetImplementedException("Rechercher des sites");
+	} 
+	
+	@GetMapping("/public/rechercherSite/{id}")
+	public String rechercherSites(Model model, @PathVariable Long id)
+	{
+		throw new NotYetImplementedException("Rechercher des sites");
+	} 
 }
