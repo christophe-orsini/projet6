@@ -8,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.service.SiteService;
-import com.oc.escalade.service.UtilisateurService;
 
 @Controller
 public class MainController
@@ -16,7 +15,6 @@ public class MainController
 	private Collection<Site> sites;
 	
 	@Autowired private SiteService siteService;
-	@Autowired private UtilisateurService utilisateurService;
 	
 	// page d'accueil 
 	@GetMapping("/")

@@ -1,7 +1,6 @@
 package com.oc.escalade.service;
 
 import java.util.Collection;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.tools.EscaladeException;

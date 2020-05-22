@@ -73,7 +73,14 @@ public class EscaladeApplication implements CommandLineRunner
 			}
 			if (i % 2 == 0)
 			{
-				siteService.taguer(site.getId());
+				try
+				{
+					siteService.taguer(site.getId());
+				}
+				catch (EscaladeException e)
+				{
+					// TODO: handle exception
+				}
 			}
 		}
 		

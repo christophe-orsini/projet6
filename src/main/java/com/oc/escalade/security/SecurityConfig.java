@@ -28,6 +28,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 		        .authorizeRequests()
 			        .antMatchers("/").permitAll()
 			        .antMatchers("/inscription").permitAll()
+			        .antMatchers("/theme/error").permitAll()
+			        .antMatchers("/theme/fatal").permitAll()
 			        .antMatchers("/public/**").permitAll()
 			        .antMatchers("/webjars/**").permitAll()
 			        .antMatchers("/inscrit/**").hasAnyRole("UTILISATEUR, MEMBRE, ADMINISTRATEUR")
