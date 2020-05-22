@@ -11,6 +11,7 @@ import com.oc.escalade.dao.SiteRepository;
 import com.oc.escalade.dao.UtilisateurRepository;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
+import com.oc.escalade.tools.EscaladeException;
 
 @Service
 public class SiteServiceImpl implements SiteService
@@ -18,7 +19,7 @@ public class SiteServiceImpl implements SiteService
 	@Autowired
 	private SiteRepository siteRepository;
 	@Autowired
-	private UtilisateurRepository utilisateurRepository; // Repository
+	private UtilisateurRepository utilisateurRepository;
 	
 	@Override
 	public Site consulterSite(Long id) {
@@ -43,20 +44,28 @@ public class SiteServiceImpl implements SiteService
 	}
 	
 	@Override
-	public Collection<Site> listerSites()
+	public Collection<Site> lister()
 	{
 		return siteRepository.findAll();
 	}
+	
+	@Override
+	public Collection<Site> listerParUtilisateur(String nom)
+	{
+		Utilisateur utilisateur = utilisateurRepository.findByEmailIgnoreCase(nom).get();
+		return siteRepository.findAllByAuteur(utilisateur);
+	}
+	
 	@Override
 	@Transactional
-	public Site publierSite(Site site, Long auteurId) {
+	public Site publierSite(Site site, String auteur) throws EscaladeException
+	{
 		// verification de l'existence de l'utilisateur
-		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(auteurId);
+		Optional<Utilisateur> utilisateur = utilisateurRepository.findByEmailIgnoreCase(auteur);
 			
 		if (!utilisateur.isPresent())
 		{
-			throw new RuntimeException("L'utilisateur N° " + auteurId + " n'existe pas");
-			
+			throw new EscaladeException("L'utilisateur " + auteur + " n'existe pas");
 		}
 		
 		// enrgeistrer l'auteur

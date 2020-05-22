@@ -18,14 +18,14 @@ public class TopoServiceImpl implements TopoService
 	private UtilisateurRepository utilisateurRepository;
 	
 	@Override
-	public Topo enregistrerTopo(Topo topo, Long proprietaireId)
+	public Topo enregistrerTopo(Topo topo, Long proprietaireId) throws Exception
 	{
 		// verification de l'existence de l'utilisateur
 		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(proprietaireId);
 			
 		if (!utilisateur.isPresent())
 		{
-			throw new RuntimeException("L'utilisateur N° " + proprietaireId + " n'existe pas");
+			throw new Exception("L'utilisateur N° " + proprietaireId + " n'existe pas");
 			
 		}
 		

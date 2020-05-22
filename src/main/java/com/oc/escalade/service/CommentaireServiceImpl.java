@@ -1,5 +1,6 @@
 package com.oc.escalade.service;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +16,9 @@ import com.oc.escalade.entities.Utilisateur;
 @Service
 public class CommentaireServiceImpl implements CommentaireService
 {
-	@Autowired
-	private CommentaireRepository commentaireRepository;
-	@Autowired
-	private UtilisateurRepository utilisateurRepository;
-	@Autowired
-	private SiteRepository siteRepository;
+	@Autowired private CommentaireRepository commentaireRepository;
+	@Autowired private UtilisateurRepository utilisateurRepository;
+	@Autowired private SiteRepository siteRepository;
 	
 	@Override
 	@Transactional
@@ -80,6 +78,13 @@ public class CommentaireServiceImpl implements CommentaireService
 			throw new RuntimeException("Le commentaire n'existe pas");
 		}
 		return commentaire.get();
+	}
+
+	@Override
+	public Collection<Commentaire> listeCommentaire(Long siteId)
+	{
+		Optional<Site> site = siteRepository.findById(siteId);
+		return commentaireRepository.findAllBySiteOrderByDateModificationDesc(site.get());
 	}
 	
 }

@@ -1,8 +1,7 @@
 package com.oc.escalade.service;
 
+import java.util.Collection;
 import com.oc.escalade.entities.Commentaire;
-import com.oc.escalade.entities.Site;
-import com.oc.escalade.entities.Utilisateur;
 
 public interface CommentaireService
 {
@@ -28,4 +27,11 @@ public interface CommentaireService
 	 */
 	public Commentaire lireCommentaire(Long id);
 
+	/**
+	 * Retourne la lisyte des commentaires pour un site
+	 * @param siteId Long : l'id du site
+	 * @return
+	 */
+	public Collection<Commentaire> listeCommentaire(Long siteId);
+	
 }

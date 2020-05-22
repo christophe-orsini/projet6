@@ -3,6 +3,7 @@ package com.oc.escalade.service;
 import java.util.Collection;
 
 import com.oc.escalade.entities.Site;
+import com.oc.escalade.tools.EscaladeException;
 
 public interface SiteService
 {
@@ -29,10 +30,10 @@ public interface SiteService
 	/**
 	 * Création d'un nouveau site par un utilisateur	
 	 * @param site Site : Le site à créer
-	 * @param auteurId Long : L'id de l'utilisateur créant le site
+	 * @param auteur String : L'email(login) de l'utilisateur créant le site
 	 * @return Site : Le site nouvellement créé
 	 */
-	public Site publierSite(Site site, Long auteurId); // F4
+	public Site publierSite(Site site, String auteur) throws EscaladeException; // F4
 	/**
 	 * Permet de taguer un site comme Officiel
 	 * @param id Long : L'id du site
@@ -43,5 +44,8 @@ public interface SiteService
 	 * Retourne tous les sites
 	 * @return
 	 */
-	public Collection<Site> listerSites();
+	public Collection<Site> lister();
+	
+	public Collection<Site> listerParUtilisateur(String nom);
+	
 }

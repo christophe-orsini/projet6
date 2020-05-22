@@ -11,8 +11,9 @@ public interface TopoService
 	 * @param topo Topo : Le topo à enregistrer
 	 * @param proprietaireId Long : L'id de l'utilisateur proprietaire du topo
 	 * @return Topo : Le topo nouvellement créé
+	 * @throws Exception 
 	 */
-	public Topo enregistrerTopo(Topo topo, Long proprietaireId); // F8
+	public Topo enregistrerTopo(Topo topo, Long proprietaireId) throws Exception; // F8
 	public Collection<Topo> listerToposDisponibles(Long proprietaireId); // F9
 	public void demanderReservationTopo(Long topoId, Long proprietaireId, Long demandeurId); // F9
 	public void accepterReservationExemplaireTopo(Long topoId,  Long proprietaireId, Long demandeurId); // F10
