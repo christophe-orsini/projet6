@@ -36,12 +36,22 @@ public class SiteServiceImpl implements SiteService
 	}
 	
 	@Override
-	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, int nombreSecteurs, int nombreVoies)
+	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, 
+			int nombreSecteurs, int nombreVoies, boolean tagged)
 	{
+		String searchedName = (nom != null && nom.equals("")) ? null: nom.toLowerCase();
+		String searchedCity = (commune != null && commune.equals("")) ? null: commune.toLowerCase();
+		String searchedDepartement = (departement != null && departement.equals("")) ? null: departement.toLowerCase();
+		String searchedCountry = (pays != null && pays.equals("")) ? null: pays.toLowerCase();
+		String searchedCotation = (cotation != null && cotation.equals("")) ? null: cotation.toLowerCase();
+		
 		String secteurs = nombreSecteurs > 0 ? String.valueOf(nombreSecteurs) : null;
 		String voies = nombreVoies > 0 ? String.valueOf(nombreVoies) : null;
-
-		return siteRepository.findAllByElements(nom, commune, departement, pays, cotation, secteurs, voies);
+		
+		String isTagged = tagged ? "Oui" : null;
+		
+		return siteRepository.findAllByElements(searchedName, searchedCity, searchedDepartement, searchedCountry,
+				searchedCotation, secteurs, voies, isTagged);
 	}
 	
 	@Override

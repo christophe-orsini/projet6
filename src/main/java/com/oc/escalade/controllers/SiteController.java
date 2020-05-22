@@ -3,7 +3,6 @@ package com.oc.escalade.controllers;
 import java.security.Principal;
 import java.util.Collection;
 import javax.validation.Valid;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -184,15 +183,21 @@ public class SiteController
 		return "redirect:/public/detailSite/" + id;
 	}
 	
-	@GetMapping("/public/rechercherSiteForm")
-	public String rechercherSitesForm(Model model)
+	@RequestMapping(value="/public/rechercheSite", method = {RequestMethod.GET, RequestMethod.POST})
+	public String rechercherSite(@Valid Site site, BindingResult bindingResult, Model model, Principal utilisateur, 
+			@Param("cotation") String cotation, @Param("submit") String submit)
 	{
-		throw new NotYetImplementedException("Rechercher des sites");
-	} 
-	
-	@GetMapping("/public/rechercherSite/{id}")
-	public String rechercherSites(Model model, @PathVariable Long id)
-	{
-		throw new NotYetImplementedException("Rechercher des sites");
-	} 
+		if (submit == null) // premier appel (GET)
+		{
+			return "site/rechercherSite";
+		}
+		
+		// taritement du formulaire (POST)
+		Collection<Site> sites = siteService.rechercherSites(site.getNom(), site.getCommune(), site.getDepartement(), site.getPays(),
+				cotation, site.getNbreSecteurs(), site.getNbreVoies(), site.isTag());
+		
+		model.addAttribute("sites",  sites);
+		
+		return "/site/listeSites";
+	}
 }

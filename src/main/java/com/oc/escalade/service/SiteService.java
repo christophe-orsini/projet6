@@ -26,7 +26,7 @@ public interface SiteService
 	 * @return Collection<Site> : Une collection des sites trouvés
 	 */
 	public Collection<Site> rechercherSites(String nom, String commune, String departement, String pays, String cotation, 
-			int nombreSecteurs, int nombreVoies); // F2
+			int nombreSecteurs, int nombreVoies, boolean tagged); // F2
 	/**
 	 * Création d'un nouveau site par un utilisateur	
 	 * @param site Site : Le site à créer

@@ -61,8 +61,8 @@ public class EscaladeApplication implements CommandLineRunner
 			site.setNbreVoies(8);
 			site.setNbreLongueurs(21);
 			site.setNbreRelais(16);
-			site.setCotationMini("3b");
-			site.setCotationMaxi("9c");
+			site.setCotationMini(i%3 + 3 + "b");
+			site.setCotationMaxi(i%4 + 5 + "c");
 			try
 			{	
 				siteService.publierSite(site, utilisateurEmail);
@@ -71,7 +71,7 @@ public class EscaladeApplication implements CommandLineRunner
 			{
 				// TODO: handle exception
 			}
-			if (i % 2 == 0)
+			if (i % 3 == 0)
 			{
 				try
 				{
