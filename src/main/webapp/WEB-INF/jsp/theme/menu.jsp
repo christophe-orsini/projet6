@@ -34,17 +34,7 @@
 		  			<a class="nav-link" href="/inscrit/restituerTopo">Restituer un Topo</a>
 		  		</div>
 		</div> 
-		<div class="dropdown">
-		    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
-		    aria-haspopup="true" aria-expanded="false">Utilisateurs</a>
-		   	<div class="dropdown-menu">
-		  			<a class="nav-link" href="/inscrit/listeUtilisateurs">Liste des utilisateurs</a>
-		  			<a class="nav-link" href="/inscrit/changerMdP">Changer son mot de passe</a>
-		  			<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')">
-		  				<a class="nav-link" href="/membre/administrerComptes">Administrer les comptes</a>
-	  				</sec:authorize>
-		  		</div>
-		</div> 
+		<a class="nav-link" href="/inscrit/listeUtilisateurs">Utilisateurs</a>
 		<a class="nav-link ml-auto" href="/logout">Se déconnecter</a>
 	</sec:authorize>
 </nav>

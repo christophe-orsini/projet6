@@ -16,12 +16,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 {
 	@Autowired
     UserDetailsService userDetailsService;
-    /*
-	@Override protected void configure(AuthenticationManagerBuilder auth) throws Exception
-	{
-		auth.userDetailsService(userDetailsService).getUserDetailsService();
-	}
-	 */
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -48,15 +43,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	                .permitAll();
     }
 
-    /*
-    @Bean
-    public AuthenticationProvider getProvider()
-    {
-        AppAuthProvider provider = new AppAuthProvider();
-        provider.setUserDetailsService(userDetailsService);
-        return provider;
-    }
-    */
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder()
     {

@@ -16,16 +16,13 @@
 						<!-- use param.error assuming FormLoginConfigurer#failureUrl contains the query parameter error -->
 				        <c:if test="${param.error != null}">
 				            <div>
-				                Erreur de connexion.
-				                <c:if test="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-				                  Motif : <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}" />
-				                </c:if>
+				                <p class="text-warning"><strong>Erreur de connexion</strong></p>
 				            </div>
 				        </c:if>
 				        <!-- the configured LogoutConfigurer#logoutSuccessUrl is /login?logout and contains the query param logout -->
 				        <c:if test="${param.logout != null}">
 				            <div>
-				                Vous êtes déconnecté.
+				                <p><strong>Vous êtes déconnecté</strong></p>
 				            </div>
 				        </c:if>
 						<div class="form-group">
@@ -37,7 +34,6 @@
 						</div>
 					<input class="btn btn-primary" type="submit" value="Se connecter">
 					</fieldset>
-					
 				</form>
 			</div>
 		</div>

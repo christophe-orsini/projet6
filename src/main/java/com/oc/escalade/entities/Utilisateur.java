@@ -2,8 +2,10 @@ package com.oc.escalade.entities;
 
 import java.util.Collection;
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * Utilisateur inscrit du site WEB
@@ -20,9 +22,10 @@ public class Utilisateur
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique = true, updatable = false, nullable = false)
-	@NotEmpty(message="L'email est obligatoire")
+	@NotEmpty(message="L''email est obligatoire")
+	@Email(message="L''adresse email n''est pas bien formée")
 	private String email; // login
-	@NotEmpty(message="Le mot de passe est obligatoire")
+	@Size(min=4, max=8, message="Le mot de passe doit avoir entre 4 et 8 caractères")
 	@Column(nullable = false)
 	private String password;
 	private String nom;

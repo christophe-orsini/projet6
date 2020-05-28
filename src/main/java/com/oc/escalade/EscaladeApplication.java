@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Site;
 import com.oc.escalade.entities.Utilisateur;
@@ -40,20 +41,19 @@ public class EscaladeApplication implements CommandLineRunner
 	private void Test() throws EscaladeException
 	{
 		// Utilisateur
-		Utilisateur utilisateur = null;
-		utilisateur = utilisateurService.inscription("admin", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
-		utilisateurService.inscription("member", "member", "Membre", "", RoleEnum.ROLE_MEMBRE);
-		utilisateurService.inscription("user", "user", "Utilisateur", "Inscrit", RoleEnum.ROLE_UTILISATEUR);
+		Utilisateur utilisateur = utilisateurService.inscription("admin@escalade.fr", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
+		utilisateurService.inscription("member@escalade.fr", "member", "Membre", "", RoleEnum.ROLE_MEMBRE);
+		utilisateurService.inscription("user@escalade.fr", "user", "Utilisateur", "Inscrit", RoleEnum.ROLE_UTILISATEUR);
 		
 		// Site
-		for (int i = 1; i <20; i++)
+		for (int i = 1; i <8; i++)
 		{
 			String ville  = "Valence";
 			String utilisateurEmail = utilisateur.getEmail();
 			if (i % 2 == 0)
 			{
 				ville  = "Romans";
-				utilisateurEmail = "user";
+				utilisateurEmail = "user@escalade.fr";
 			}
 			
 			String nom = "Site " + i;
@@ -74,10 +74,15 @@ public class EscaladeApplication implements CommandLineRunner
 		}
 		
 		// Commentaire
-		for (int i=1; i<20; i++)
+		for (int i=1; i<4; i++)
 		{
 			String message = "Voici le commentaire N° " + i;
 			commentaireService.commenter(message, 1L, utilisateur.getId());
+		}
+		for (int i=1; i<3; i++)
+		{
+			String message = "Ceci est le commentaire N° " + i;
+			commentaireService.commenter(message, 2L, 3L);
 		}
 		/*
 		// Topo
