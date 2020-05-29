@@ -35,6 +35,12 @@ public class UtilisateurController
 			BindingResult bindingResult, Model model, Principal connectedUser)
 	{
 		String message = "";
+		// controle taille password
+		if (utilisateur != null && utilisateur.getPassword().length() < 4 || utilisateur.getPassword().length() > 8)
+		{
+			bindingResult.rejectValue("password", "error.password", "Le mot de passe doit avoir entre 4 et 8 caractères");
+		}
+		
 		if (bindingResult.hasErrors())
 		{
 			return "utilisateur/creerUtilisateur";

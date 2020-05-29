@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * Utilisateur inscrit du site WEB
@@ -15,17 +14,13 @@ import javax.validation.constraints.Size;
 @Entity
 public class Utilisateur
 {
-	@SuppressWarnings("unused")
-	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	@Column(unique = true, updatable = false, nullable = false)
 	@NotEmpty(message="L''email est obligatoire")
-	@Email(message="L''adresse email n''est pas bien formée")
+	@Email(message="L'adresse email n'est pas bien formée")
 	private String email; // login
-	@Size(min=4, max=8, message="Le mot de passe doit avoir entre 4 et 8 caractères")
 	@Column(nullable = false)
 	private String password;
 	private String nom;
@@ -36,6 +31,8 @@ public class Utilisateur
 	
 	@OneToMany(mappedBy="proprietaire")
 	private Collection<Topo> topos; 
+	@OneToMany(mappedBy="emprunteur")
+	private Collection<Topo> toposEmprunt;
 	@OneToMany(mappedBy="auteur")
 	private Collection<Site> sites; // déposés
 	@OneToMany(mappedBy="auteur")
@@ -138,6 +135,16 @@ public class Utilisateur
 	public void setTopos(Collection<Topo> topos)
 	{
 		this.topos = topos;
+	}
+
+	public Collection<Topo> getToposEmprunt()
+	{
+		return toposEmprunt;
+	}
+
+	public void setToposEmprunt(Collection<Topo> toposEmprunt)
+	{
+		this.toposEmprunt = toposEmprunt;
 	}
 
 	@Override
