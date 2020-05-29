@@ -19,12 +19,12 @@
 					<div class="form-group">
 						<form:label path="email">Email</form:label> 
 						<form:input  path="email" class="form-control" />
-						<form:errors path="email" vssClass="error" class="text-danger"/>
+						<form:errors path="email" cssClass="error text-danger"/>
 					</div>
 					<div class="form-group">
 						<form:label path="password">Mot de passe</form:label>
 						<form:input path="password" class="form-control" />
-						<form:errors path="password" vssClass="error" class="text-danger"/>
+						<form:errors path="password" cssClass="error text-danger"/>
 					</div>
 					<div class="form-group">
 						<form:label path="nom">Nom</form:label>
