@@ -2,7 +2,7 @@ package com.oc.escalade.entities;
 
 import java.util.Date;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Commentaire laissé par un utilisateur au sujet d'un site
@@ -15,11 +15,12 @@ public class Commentaire
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datePublication;
-	@NotNull
+	@NotEmpty(message="Le commentaire ne peut pas être vide")
 	private String contenu;
+	@Column(nullable = false)
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dateModification;
 	
@@ -43,6 +44,12 @@ public class Commentaire
 		this.auteur = auteur;
 	}
 
+	public Commentaire(Site site)
+	{
+		super();
+		this.site = site;
+	}
+	
 	public Date getDatePublication() {
 		return datePublication;
 	}
@@ -77,6 +84,11 @@ public class Commentaire
 
 	public Long getId() {
 		return id;
+	}
+
+	public void setId(Long id)
+	{
+		this.id = id;
 	}
 
 	public Date getDateModification()

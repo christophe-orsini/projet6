@@ -23,20 +23,20 @@ public class CommentaireServiceImpl implements CommentaireService
 	
 	@Override
 	@Transactional
-	public Commentaire commenter(String commentaire, Long siteId, Long auteurId) throws EscaladeException
+	public Commentaire commenter(String commentaire, Long siteId, String auteurEmail) throws EscaladeException
 	{
 		// verification de l'existence de l'utilisateur
-		Optional<Utilisateur> utilisateur = utilisateurRepository.findById(auteurId);
+		Optional<Utilisateur> utilisateur = utilisateurRepository.findByEmailIgnoreCase(auteurEmail);
 		if (!utilisateur.isPresent())
 		{
-			throw new EscaladeException("L'utilisateur n'existe pas");
+			throw new EscaladeException("L'utilisateur " + auteurEmail + " n'existe pas");
 		}
 		
 		// verification de l'existence du site
 		Optional<Site> site = siteRepository.findById(siteId);
 		if (!site.isPresent())
 		{
-			throw new EscaladeException("Le site n'existe pas");
+			throw new EscaladeException("Le site avec l'Id " + siteId + " n'existe pas");
 		}
 		
 		// création et MàJ du commentaire
@@ -53,41 +53,65 @@ public class CommentaireServiceImpl implements CommentaireService
 	
 	@Override
 	@Transactional
-	public Commentaire modifierCommentaire(Long commentaireId, String texte)  throws EscaladeException
+	public Commentaire modifierCommentaire(Commentaire commentaire)  throws EscaladeException
 	{
 		// verification de l'existence de l'utilisateur
-		Optional<Commentaire> commentaireLocal = commentaireRepository.findById(commentaireId);
+		Optional<Commentaire> ancienCommentaire = commentaireRepository.findById(commentaire.getId());
 			
-		if (!commentaireLocal.isPresent())
+		if (!ancienCommentaire.isPresent())
 		{
 			throw new EscaladeException("Le commentaire n'existe pas");
 		}
 		
 		// changement du commentaire
-		commentaireLocal.get().setContenu(texte);
-		commentaireLocal.get().setDateModification(new Date());
+		ancienCommentaire.get().setContenu(commentaire.getContenu());
+		ancienCommentaire.get().setDateModification(new Date());
 		
-		return commentaireRepository.save(commentaireLocal.get());
+		return commentaireRepository.save(ancienCommentaire.get());
 	}
 
 	@Override
 	public Commentaire lireCommentaire(Long id) throws EscaladeException
 	{
-		/// verification de l'existence de l'utilisateur
 		Optional<Commentaire> commentaire = commentaireRepository.findById(id);
 			
 		if (!commentaire.isPresent())
 		{
-			throw new EscaladeException("Le commentaire n'existe pas");
+			throw new EscaladeException("Le commentaire avec l'id " + id + " n'existe pas");
 		}
 		return commentaire.get();
 	}
-
+	
 	@Override
 	public Collection<Commentaire> listeCommentaire(Long siteId)
 	{
 		Optional<Site> site = siteRepository.findById(siteId);
 		return commentaireRepository.findAllBySiteOrderByDateModificationDesc(site.get());
 	}
-	
+
+	@Override
+	public Commentaire getCommentairePourSite(Long siteId) throws EscaladeException
+	{
+		Optional<Site> site = siteRepository.findById(siteId);
+		if (!site.isPresent())
+		{
+			throw new EscaladeException("Le site avec l'Id " + siteId + " n'existe pas");
+		}
+		
+		return new Commentaire(site.get());
+	}
+
+	public Commentaire supprimerCommentaire(Long id) throws EscaladeException
+	{
+		Optional<Commentaire> commentaire = commentaireRepository.findById(id);
+		
+		if (!commentaire.isPresent())
+		{
+			throw new EscaladeException("Le commentaire avec l'id " + id + " n'existe pas");
+		}
+		
+		commentaireRepository.deleteById(id);
+		
+		return commentaire.get();
+	}
 }

@@ -77,12 +77,12 @@ public class EscaladeApplication implements CommandLineRunner
 		for (int i=1; i<4; i++)
 		{
 			String message = "Voici le commentaire N° " + i;
-			commentaireService.commenter(message, 1L, utilisateur.getId());
+			commentaireService.commenter(message, 1L, utilisateur.getEmail());
 		}
 		for (int i=1; i<3; i++)
 		{
 			String message = "Ceci est le commentaire N° " + i;
-			commentaireService.commenter(message, 2L, 3L);
+			commentaireService.commenter(message, 2L, "user@escalade.fr");
 		}
 		/*
 		// Topo
