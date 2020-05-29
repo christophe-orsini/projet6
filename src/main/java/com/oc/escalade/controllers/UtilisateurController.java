@@ -4,15 +4,12 @@ import java.security.Principal;
 import java.util.Collection;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.service.UtilisateurService;
@@ -26,79 +23,45 @@ public class UtilisateurController
 	@Autowired
 	private UtilisateurService utilisateurService;
 
-	@RequestMapping(value="/inscription", method = {RequestMethod.GET, RequestMethod.POST})
-	public String creerUtilisateur(@Valid Utilisateur utilisateur, BindingResult bindingResult, Model model,
-			Principal connectedUser, @Param("submit") String submit)
+	@GetMapping(value="/inscription")
+	public String inscription(Model model)
 	{
-		if (submit == null) // premier appel (GET)
-		{
-			return "utilisateur/creerUtilisateur";
-		}
-		
-		// traitement formulaire (POST)
-		//check format email
-		String email = utilisateur.getEmail().toLowerCase();
-		String pattern = "^[a-z]+([a-z0-9])*@([a-z0-9])*\\.([a-z]){2,4}";
-		if (!email.matches(pattern))
-		{
-			bindingResult.rejectValue("email", "email.format", "Le format de l'email n'est pas valide");
-		}
-		if (utilisateur.getPassword().length() < 4 || utilisateur.getPassword().length() > 8)
-		{
-			bindingResult.rejectValue("password", "password.size", "Le mot de passe de avoir entre 4 et 8 caractères");
-		}
-		
+		model.addAttribute("utilisateur", new Utilisateur());
+		return "utilisateur/creerUtilisateur";
+	}		
+
+	@PostMapping(value="/public/enregistrerUtilisateur")
+	public String enregistrerUtilisateur(@ModelAttribute("utilisateur") @Valid Utilisateur utilisateur, 
+			BindingResult bindingResult, Model model, Principal connectedUser)
+	{
 		String message = "";
+		// controle taille password
+		if (utilisateur != null && utilisateur.getPassword().length() < 4 || utilisateur.getPassword().length() > 8)
+		{
+			bindingResult.rejectValue("password", "error.password", "Le mot de passe doit avoir entre 4 et 8 caractères");
+		}
+		
 		if (bindingResult.hasErrors())
 		{
-			for (ObjectError error : bindingResult.getAllErrors())
-			{
-				if (error.getDefaultMessage() != null)
-				{
-					message += error.getDefaultMessage() + "<br />";
-				}
-			}
-			model.addAttribute("exceptionMessage", message);
 			return "utilisateur/creerUtilisateur";
 		}
-		else
-		{
-			// enregistrer le site
-			try
-			{
-				Utilisateur nouveau = utilisateurService.inscription(utilisateur.getEmail(), utilisateur.getPassword(), 
-						utilisateur.getNom(), utilisateur.getPrenom(), RoleEnum.ROLE_UTILISATEUR);
-				
-				model.addAttribute("login", nouveau.getEmail());
-				
-				return "utilisateur/messageInscription";
-			}
-			catch (EscaladeException e)
-			{
-				message += e.getMessage();
-			}
-		}
 		
-		// si erreurs
-		model.addAttribute("exceptionMessage", message);
-		
-		return "utilisateur/creerUtilisateur";
-	}
-
-	@GetMapping("/inscrit/detailUtilisateur/{id}")
-	public String consulterUtilisateur(Model model, @PathVariable Long id)
-	{
+		// enregistrer le site
 		try
 		{
-			Utilisateur utilisateur = utilisateurService.consulter(id);
+			Utilisateur nouveau = utilisateurService.inscription(utilisateur.getEmail(), utilisateur.getPassword(), 
+					utilisateur.getNom(), utilisateur.getPrenom(), RoleEnum.ROLE_UTILISATEUR);
 			
-			model.addAttribute("utilisateur", utilisateur);
-			return "utilisateur/detailUtilisateur";
+			model.addAttribute("login", nouveau.getEmail());
+			
+			return "utilisateur/messageInscription";
 		}
 		catch (EscaladeException e)
 		{
-			model.addAttribute("exceptionMessage", e);
-			return "/theme/error";
+			message += e.getMessage();
+			model.addAttribute("exceptionMessage", message);
+			
+			return "utilisateur/creerUtilisateur";
 		}
 	}
 	

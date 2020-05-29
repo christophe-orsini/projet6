@@ -2,35 +2,36 @@ package com.oc.escalade.entities;
 
 public enum RoleEnum
 {
-	ROLE_UTILISATEUR (1),
-	ROLE_MEMBRE (2),
-	ROLE_ADMINISTRATEUR (4);
+	ROLE_UTILISATEUR (1, "Utilisateur"),
+	ROLE_MEMBRE (2, "Membre"),
+	ROLE_ADMINISTRATEUR (4, "Administrateur");
 
 	private int value;
+	private String name;
 	
-	RoleEnum(int value)
+	RoleEnum(int value, String name)
 	{
 		this.value = value;
+		this.name = name;
 	}
-	
-	public int value()
+
+	public int getValue()
 	{
 		return value;
 	}
-	
-	@Override
-	public String toString()
+
+	public void setValue(int value)
 	{
-		switch(value)
-		{
-			case 1:
-				return "Utilisateur";
-			case 2:
-				return "Membre de l'association";
-			case 4:
-				return "Administrateur du site";
-			default:
-				return "Inconnu";
-		}
+		this.value = value;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 }

@@ -3,7 +3,7 @@
     <footer class="container">
     	<div class="row">
     		<div class="col">
-    			<p>${exceptionMessage}</p>
+    			<p class="text-danger"><strong>${exceptionMessage}</strong></p>
     		</div>
     	</div>
     </footer>

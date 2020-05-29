@@ -3,6 +3,7 @@ package com.oc.escalade.service;
 import java.util.Collection;
 
 import com.oc.escalade.entities.Topo;
+import com.oc.escalade.tools.EscaladeException;
 
 public interface TopoService
 {
@@ -13,8 +14,15 @@ public interface TopoService
 	 * @return Topo : Le topo nouvellement créé
 	 * @throws Exception 
 	 */
-	public Topo enregistrerTopo(Topo topo, Long proprietaireId) throws Exception; // F8
-	public Collection<Topo> listerToposDisponibles(Long proprietaireId); // F9
-	public void demanderReservationTopo(Long topoId, Long proprietaireId, Long demandeurId); // F9
-	public void accepterReservationExemplaireTopo(Long topoId,  Long proprietaireId, Long demandeurId); // F10
+	public Topo publierTopo(Topo topo, String proprietaire) throws EscaladeException; // F8
+	public Collection<Topo> listerTopos();
+	public Collection<Topo> listerToposDisponibles(Long proprietaireId) throws EscaladeException; // F9
+	public Collection<Topo> listerToposDisponibles(String proprietaire) throws EscaladeException; // F9
+	public Collection<Topo> listerToposEmprunt(String proprietaire) throws EscaladeException;
+	public Topo consulterTopo(Long id) throws EscaladeException;
+	public Topo demanderReservationTopo(Long topoId, String demandeur) throws EscaladeException; // F9
+	public Topo accepterReservationTopo(Long topoId) throws EscaladeException; // F10
+	public Topo retourTopo(Long topoId) throws EscaladeException; // F10
+	public Topo accepterReservationExemplaireTopo(Long topoId,  Long proprietaireId, Long demandeurId) throws EscaladeException; // F10
+	public Topo getNewTopo(String proprietaireEmail) throws EscaladeException;
 }

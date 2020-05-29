@@ -8,14 +8,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import com.oc.escalade.entities.Commentaire;
+import org.springframework.web.bind.annotation.PostMapping;
 import com.oc.escalade.entities.Site;
-import com.oc.escalade.service.CommentaireService;
 import com.oc.escalade.service.SiteService;
 import com.oc.escalade.tools.EscaladeException;
 
@@ -23,13 +20,14 @@ import com.oc.escalade.tools.EscaladeException;
 public class SiteController
 {
 	@Autowired private SiteService siteService;
-	@Autowired private CommentaireService commentaireService;
+
 	
 	@GetMapping("/public/listeSites")
 	public String listerSites(Model model)
 	{
 		Collection<Site> sites = siteService.lister();
 		model.addAttribute("sites",  sites);
+		model.addAttribute("siteCherche", new Site());
 		
 		return "site/listeSites";
 	}
@@ -40,6 +38,8 @@ public class SiteController
 		Collection<Site> sites = siteService.listerParUtilisateur(utilisateurConnecte.getName());
 		model.addAttribute("sites",  sites);
 		model.addAttribute("utilisateur", utilisateurConnecte.getName());
+		model.addAttribute("siteCherche", new Site());
+		
 		return "site/listeSites";
 	}
 	
@@ -50,7 +50,6 @@ public class SiteController
 		try
 		{
 			 site = siteService.consulterSite(id);
-			
 		}
 		catch (EscaladeException e)
 		{
@@ -58,110 +57,85 @@ public class SiteController
 			return "/theme/error";
 		}
 		
-		Collection<Commentaire> commentaires = commentaireService.listeCommentaire(id);
+		model.addAttribute("site", site);
+		
+		return "site/creerSite";
+	}
+	
+	@GetMapping(value="/inscrit/publierSite")
+	public String publierSite(Model model)
+	{
+		model.addAttribute("site", new Site());
+		return "site/creerSite";
+	}
+	
+	@PostMapping(value="/inscrit/creerSite")
+	public String creerSite(@ModelAttribute("site") @Valid Site site, BindingResult bindingResult, Model model,	Principal utilisateur)
+	{
+		if (bindingResult.hasErrors())
+		{
+			return "site/creerSite";
+		}
+		
+		String message = "";
+		// enregistrer le site
+		try
+		{
+			siteService.publierSite(site, utilisateur.getName());
+			return "redirect:/";
+		}
+		catch (EscaladeException e)
+		{
+			message += e.getMessage();
+			model.addAttribute("exceptionMessage", message);
+			
+			return "site/creerSite";
+		}
+	}
+	
+	@GetMapping(value="/inscrit/modifierSite/{id}")
+	public String modifierSite(@ModelAttribute("site") Site site, Model model, @PathVariable Long id)
+	{
+		try
+		{
+			site = siteService.consulterSite(id);
+		}
+		catch (EscaladeException e)
+		{
+			model.addAttribute("exceptionMessage", e);
+			return "/theme/error";
+		}
 		
 		model.addAttribute("site", site);
-		model.addAttribute("commentaires",  commentaires);
-		
-		return "site/detailSite";
-	}
-	
-	@RequestMapping(value="/inscrit/creerSite", method = {RequestMethod.GET, RequestMethod.POST})
-	public String creerSite(@Valid Site site, BindingResult bindingResult, Model model,	Principal utilisateur, @Param("submit") String submit)
-	{
-		if (submit == null) // premier appel (GET)
-		{
-			return "site/creerSite";
-		}
-		
-		// traitement formulaire (POST)
-		String message = "";
-		if (bindingResult.hasErrors())
-		{
-			for (ObjectError error : bindingResult.getAllErrors())
-			{
-				if (error.getDefaultMessage() != null)
-				{
-					message += error.getDefaultMessage() + "<br />";
-				}
-			}
-			model.addAttribute("exceptionMessage", message);
-			return "site/creerSite";
-		}
-		else
-		{
-			// enregistrer le site
-			try
-			{
-				siteService.publierSite(site, utilisateur.getName());
-				return "redirect:/";
-			}
-			catch (EscaladeException e)
-			{
-				message += e.getMessage();
-			}
-		}
-		
-		// si erreurs
-		model.addAttribute("exceptionMessage", message);
+		model.addAttribute("update", true);
 		
 		return "site/creerSite";
 	}
 	
-	@RequestMapping(value="/inscrit/modifierSite/{id}", method = {RequestMethod.GET, RequestMethod.POST})
-	public String modifierSite(@Valid Site site, BindingResult bindingResult, Model model,	Principal utilisateur,
-			@PathVariable Long id, @Param("submit") String submit)
-	{
-		if (submit == null) // premier appel (GET)
-		{
-			try
-			{
-				site = siteService.consulterSite(id);
-			}
-			catch (EscaladeException e)
-			{
-				model.addAttribute("exceptionMessage", e);
-				return "/theme/error";
-			}
-			
-			model.addAttribute("site", site);
-			model.addAttribute("update", true);
-			
-			return "site/creerSite";
-		}
-		
-		// traitement formulaire (POST)
+	@PostMapping(value="/inscrit/enregistrerSite")
+	public String enregistrerSite(@ModelAttribute("site") @Valid Site site, BindingResult bindingResult, Model model,
+			Principal utilisateur)
+	{		
 		String message = "";
+		model.addAttribute("update", true);
 		if (bindingResult.hasErrors())
-		{
-			for (ObjectError error : bindingResult.getAllErrors())
-			{
-				if (error.getDefaultMessage() != null)
-				{
-					message += error.getDefaultMessage() + "<br />";
-				}
-			}
-			model.addAttribute("exceptionMessage", message);
+		{	
 			return "site/creerSite";
 		}
-		else
+		
+		// enregistrer le site
+		try
 		{
-			// enregistrer le site
-			try
-			{
-				siteService.modifierSite(site);
-				return "redirect:/public/listeSites";
-			}
-			catch (EscaladeException e)
-			{
-				message += e.getMessage();
-			}
+			siteService.modifierSite(site);
+			return "redirect:/public/listeSites";
 		}
-		
-		// si erreurs
-		model.addAttribute("exceptionMessage", message);
-		
-		return "site/creerSite";
+		catch (EscaladeException e)
+		{
+			message += e.getMessage();
+			model.addAttribute("exceptionMessage", message);
+			
+			return "site/creerSite";
+		}
 	}
 	
 	@GetMapping("/membre/taguerSite/{id}")
@@ -183,18 +157,12 @@ public class SiteController
 		return "redirect:/public/detailSite/" + id;
 	}
 	
-	@RequestMapping(value="/public/rechercheSite", method = {RequestMethod.GET, RequestMethod.POST})
-	public String rechercherSite(@Valid Site site, BindingResult bindingResult, Model model, Principal utilisateur, 
-			@Param("cotation") String cotation, @Param("submit") String submit)
+	@PostMapping(value="/public/rechercheSite")
+	public String rechercherSite(@ModelAttribute("siteCherche") @Valid Site siteCherche, BindingResult bindingResult, Model model,
+			Principal utilisateur, @Param("cotation") String cotation)
 	{
-		if (submit == null) // premier appel (GET)
-		{
-			return "site/rechercherSite";
-		}
-		
-		// taritement du formulaire (POST)
-		Collection<Site> sites = siteService.rechercherSites(site.getNom(), site.getCommune(), site.getDepartement(), site.getPays(),
-				cotation, site.getNbreSecteurs(), site.getNbreVoies(), site.isTag());
+		Collection<Site> sites = siteService.rechercherSites(siteCherche.getNom(), siteCherche.getCommune(), siteCherche.getDepartement(),
+				siteCherche.getPays(), cotation, siteCherche.getNbreSecteurs(), siteCherche.getNbreVoies(), siteCherche.isTag());
 		
 		model.addAttribute("sites",  sites);
 		

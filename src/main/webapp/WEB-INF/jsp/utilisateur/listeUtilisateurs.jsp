@@ -21,15 +21,17 @@
 					<th>Nom</th>
 					<th>Prenom</th>
 					<th>Role</th>
+					<th>Topos</th>
 				</tr>
 			</thead>	
 			<tbody>
 				<c:forEach items="${utilisateurs}" var="utilisateur" varStatus="status">
 				<tr>
-					<td><a href="detailUtilisateur/${utilisateur.id}">${utilisateur.email}</a></td>
+					<td>${utilisateur.email}</td>
 					<td>${utilisateur.nom}</td>
 					<td>${utilisateur.prenom}</td>
-					<td>${utilisateur.role.toString()}</td>					
+					<td>${utilisateur.role.getName()}</td>					
+					<td><a class="btn btn-primary" href="/inscrit/listeTopos/${utilisateur.id}">Liste</a></td>					
 				</tr>
 				</c:forEach>
 			</tbody>

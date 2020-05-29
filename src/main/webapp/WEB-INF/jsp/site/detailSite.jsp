@@ -78,24 +78,22 @@
 						<input class="form-control form-control-sm" type="text" name="cotationMaxi" id="cotationMaxi" 
 							value="${site.cotationMaxi}" readonly size="3" /><br/>
 					</div>
-					
-					<div class="form-group">
-						<label class="mt-2">Commentaires</label> 
+					<div class="form-group mt-2">
 						<sec:authorize access="isAuthenticated()">
-							<a class="btn btn-primary" href="/inscrit/ajouterCommentaire/${site.id}">
-							Nouveau commentaire</a>
+							<a class="btn btn-primary" href="/inscrit/commenter/${site.id}">Commenter</a>
 						</sec:authorize>
-						<table class="table table-striped table-bordered">
-							<tbody>
-								<c:forEach items="${commentaires}" var="commentaire" varStatus="status">
-								<tr>
-									<td class="w-25"><fmt:formatDate type="BOTH" timeStyle="SHORT"
-										value="${commentaire.dateModification}"/></td> 
-									<td class="w-75">${commentaire.contenu}</td>
-								</tr>
-								</c:forEach>
-							</tbody>
-						</table>
+						<ul class="list-group">
+							<c:forEach items="${site.commentaires}" var="commentaire" varStatus="status">
+								<li class="list-group-item">
+									Le <fmt:formatDate type="BOTH" pattern="dd/MM/yy hh:mm" value="${commentaire.dateModification}"/> 									
+									<span class="ml-1">${commentaire.auteur.nom}</span>
+									<span class="ml-1">a dit : ${commentaire.contenu}</span>
+									<sec:authorize access="hasAnyRole('ROLE_MEMBRE', 'ROLE_ADMINISTRATEUR')">
+										<a class="btn btn-primary" href="/membre/modifierCommentaire/${commentaire.id}">Modifier</a>
+									</sec:authorize>
+								</li>
+							</c:forEach>
+						</ul>					
 					</div>
 				</form>
 			</div>

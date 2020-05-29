@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.Range;
 
 /**
@@ -19,34 +20,36 @@ public class Site implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@Column(unique = true, nullable = false)
+	@Column(unique = true, updatable = false, nullable = false)
 	@NotEmpty(message="Le nom du site est obligatoire")
 	private String nom;
 	private String description;
-	@Column(nullable = false)
 	@NotEmpty(message="La commune est obligatoire")
 	private String commune;
-	@Column(nullable = false)
 	@NotEmpty(message="Le département est obligatoire")
 	private String departement;
-	private String pays;
-	@Column(nullable = false)
-	@Range(min=-90, max=90, message="Cette latitude est impossible")
+	private String pays = "France";
+	@Range(min=-90, max=90, message="La latitude est impossible")
 	private double latitude;
-	@Column(nullable = false)
-	@Range(min=-180, max=180, message="Cette longitude est impossible")
+	@Range(min=-180, max=180, message="La longitude est impossible")
 	private double longitude;
-	private boolean tag; // marqué par l'administrateur
+	private boolean tag;
+	@Range(min=0, message="Le nombre de secteurs ne peut pas être négatif")
 	private int nbreSecteurs;
+	@Range(min=0, message="Le nombre de voies ne peut pas être négatif")
 	private int nbreVoies;
+	@Range(min=0, message="Le nombre de longueurs ne peut pas être négatif")
 	private int nbreLongueurs;
+	@Range(min=0, message="Le nombre de relais ne peut pas être négatif")
 	private int nbreRelais;
+	@Size(min=1, max=2, message="Cette cotation n'est pas valide")
 	private String cotationMini;
+	@Size(min=1, max=2, message="Cette cotation n'est pas valide")
 	private String cotationMaxi;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datePublication;
 	
-	@OneToMany(mappedBy="site")
+	@OneToMany(mappedBy="site", fetch = FetchType.EAGER)
 	private Collection<Commentaire> commentaires;
 	
 	@ManyToOne
