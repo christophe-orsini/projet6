@@ -25,11 +25,9 @@
 		    aria-haspopup="true" aria-expanded="false">Topos</a>
 		   	<div class="dropdown-menu">
 		  			<a class="nav-link" href="/inscrit/listeTopos">Liste des Topos</a>
-		  			<a class="nav-link" href="/inscrit/creerTopo">Nouveau Topo</a>
-		  			<a class="nav-link" href="/inscrit/modifierTopo">Modifier Topo</a>
-		  			<a class="nav-link" href="/inscrit/demanderTopo">Demander un Topo</a>
-		  			<a class="nav-link" href="/inscrit/accepterDemandeTopo">Accepter une demande de réservation</a>
-		  			<a class="nav-link" href="/inscrit/restituerTopo">Restituer un Topo</a>
+		  			<a class="nav-link" href="/inscrit/listeToposUtilisateur">Liste de vos Topos</a>
+		  			<a class="nav-link" href="/inscrit/listeToposEmprunt">Liste des Topos empruntés</a>
+		  			<a class="nav-link" href="/inscrit/publierTopo">Nouveau Topo</a>
 		  		</div>
 		</div> 
 		<a class="nav-link" href="/inscrit/listeUtilisateurs">Utilisateurs</a>

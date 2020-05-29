@@ -1,7 +1,8 @@
 package com.oc.escalade.entities;
 
+import java.util.Date;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Receuil d'informations sur les sites d'escalade d'une région
@@ -14,26 +15,42 @@ public class Topo
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
-	@NotNull
+	@NotEmpty(message="Le titre doit être renseigné")
 	private String titre;
 	private String region;
-	@NotNull
-	private String decription;
+	private String description;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date datePublication;
+	private boolean disponible = true;
+	private boolean demande;
 	
 	@JoinColumn(name="proprietaire_id")
 	@ManyToOne
 	private Utilisateur proprietaire;
 	
+	@JoinColumn(name="emprunteur_id")
+	@ManyToOne
+	private Utilisateur emprunteur;
+
 	public Topo() {
 		super();
-		
 	}
 
-	public Topo(String titre, String region, String decription) {
+	public Topo(String titre, String region, String description) {
 		super();
 		this.titre = titre;
 		this.region = region;
-		this.decription = decription;
+		this.description = description;
+	}
+
+	public Date getDatePublication()
+	{
+		return datePublication;
+	}
+
+	public void setDatePublication(Date datePublication)
+	{
+		this.datePublication = datePublication;
 	}
 
 	public String getTitre() {
@@ -52,18 +69,23 @@ public class Topo
 		this.region = region;
 	}
 
-	public String getDecription() {
-		return decription;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDecription(String decription) {
-		this.decription = decription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public Long getId() {
 		return id;
 	}
 
+	public void setId(Long id)
+	{
+		this.id = id;
+	}
+	
 	@Override
 	public String toString() {
 		return "Topo [titre=" + titre + "]";
@@ -78,5 +100,34 @@ public class Topo
 	{
 		this.proprietaire = proprietaire;
 	}
+
+	public boolean isDisponible()
+	{
+		return disponible;
+	}
+
+	public void setDisponible(boolean disponible)
+	{
+		this.disponible = disponible;
+	}
 	
+	public Utilisateur getEmprunteur()
+	{
+		return emprunteur;
+	}
+
+	public void setEmprunteur(Utilisateur emprunteur)
+	{
+		this.emprunteur = emprunteur;
+	}
+	
+	public boolean isDemande()
+	{
+		return demande;
+	}
+
+	public void setDemande(boolean demande)
+	{
+		this.demande = demande;
+	}
 }

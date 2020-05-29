@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Site;
+import com.oc.escalade.entities.Topo;
 import com.oc.escalade.entities.Utilisateur;
 import com.oc.escalade.service.CommentaireService;
 import com.oc.escalade.service.SiteService;
+import com.oc.escalade.service.TopoService;
 import com.oc.escalade.service.UtilisateurService;
 import com.oc.escalade.tools.EscaladeException;
 
@@ -22,10 +23,9 @@ public class EscaladeApplication implements CommandLineRunner
 	private SiteService siteService;
 	@Autowired
 	private CommentaireService commentaireService;
-	/*
 	@Autowired
 	private TopoService topoService;
-	*/
+
 	public static void main(String[] args)
 	{
 		SpringApplication.run(EscaladeApplication.class, args);	
@@ -41,9 +41,9 @@ public class EscaladeApplication implements CommandLineRunner
 	private void Test() throws EscaladeException
 	{
 		// Utilisateur
-		Utilisateur utilisateur = utilisateurService.inscription("admin@escalade.fr", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
-		utilisateurService.inscription("member@escalade.fr", "member", "Membre", "", RoleEnum.ROLE_MEMBRE);
-		utilisateurService.inscription("user@escalade.fr", "user", "Utilisateur", "Inscrit", RoleEnum.ROLE_UTILISATEUR);
+		Utilisateur utilisateur = utilisateurService.inscription("admin@ae.fr", "admin", "Administrateur", "", RoleEnum.ROLE_ADMINISTRATEUR);
+		utilisateurService.inscription("member@ae.fr", "member", "Membre", "", RoleEnum.ROLE_MEMBRE);
+		utilisateurService.inscription("user@ae.fr", "user", "Utilisateur", "Inscrit", RoleEnum.ROLE_UTILISATEUR);
 		
 		// Site
 		for (int i = 1; i <8; i++)
@@ -53,7 +53,7 @@ public class EscaladeApplication implements CommandLineRunner
 			if (i % 2 == 0)
 			{
 				ville  = "Romans";
-				utilisateurEmail = "user@escalade.fr";
+				utilisateurEmail = "user@ae.fr";
 			}
 			
 			String nom = "Site " + i;
@@ -82,12 +82,23 @@ public class EscaladeApplication implements CommandLineRunner
 		for (int i=1; i<3; i++)
 		{
 			String message = "Ceci est le commentaire N° " + i;
-			commentaireService.commenter(message, 2L, "user@escalade.fr");
+			commentaireService.commenter(message, 2L, "user@ae.fr");
 		}
-		/*
+		
 		// Topo
-		Topo topo = topoService.enregistrerTopo(new Topo("Le super Topo", "La région du sud", "Ce topo décrit un topo du sud"), 1L);
-		System.out.println(topo.getDecription());
-		*/
+		for (int i = 1; i<10; i++)
+		{
+			Topo topo = new Topo("Topo " + i, "La région du sud", "Ce topo décrit un topo du sud");
+			
+			if (i % 2 == 0)
+			{
+				topoService.publierTopo(topo, utilisateur.getEmail());
+			}
+			else
+			{
+				topo.setDisponible(false);
+				topoService.publierTopo(topo, "user@ae.fr");
+			}
+		}
 	}
 }
