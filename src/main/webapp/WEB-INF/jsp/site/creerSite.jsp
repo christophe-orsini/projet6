@@ -12,7 +12,7 @@
 	<section class="container">
 	<div class="row">
 			<div class="col">
-				<p class="h3">Création d'un site</p>
+				<p class="h3">Publication d'un site</p>
 			</div>
 		</div>
 		<div class="row">
@@ -79,13 +79,13 @@
 								<li><form:errors path="cotationMaxi" cssClass="error text-danger" /></li>
 							</ul></div>
 						</div>
-					</div>
+					</div>				
 					<c:if test="${not empty update}">
 						<input class="btn btn-primary" type="submit" value=Enregistrer />
 					</c:if>
 					<c:if test="${empty update}">
 						<input class="btn btn-primary" type="submit" value="Publier" />
-					</c:if>
+					</c:if>				
 				</form:form>
 			</div>
 		</div>

@@ -59,7 +59,7 @@ public class SiteController
 		
 		model.addAttribute("site", site);
 		
-		return "site/detailSite";
+		return "site/creerSite";
 	}
 	
 	@GetMapping(value="/inscrit/publierSite")
