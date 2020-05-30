@@ -23,7 +23,7 @@
 					</div>
 					<div class="form-group">
 						<form:label path="password">Mot de passe</form:label>
-						<form:input path="password" class="form-control" />
+						<form:password path="password" class="form-control" />
 						<form:errors path="password" cssClass="error text-danger"/>
 					</div>
 					<div class="form-group">

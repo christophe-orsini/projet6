@@ -65,7 +65,7 @@ public class UtilisateurController
 		}
 	}
 	
-	@GetMapping("/inscrit/listeUtilisateurs")
+	@GetMapping("/admin/listeUtilisateurs")
 	public String listeUtilisateurs(Model model)
 	{
 		utilisateurs = utilisateurService.lister();
