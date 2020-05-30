@@ -59,7 +59,7 @@ public class SiteController
 		
 		model.addAttribute("site", site);
 		
-		return "site/creerSite";
+		return "site/detailSite";
 	}
 	
 	@GetMapping(value="/inscrit/publierSite")
@@ -81,8 +81,11 @@ public class SiteController
 		// enregistrer le site
 		try
 		{
-			siteService.publierSite(site, utilisateur.getName());
-			return "redirect:/";
+			site = siteService.publierSite(site, utilisateur.getName());
+			
+			model.addAttribute("message", "Le site a été créé avec succès");
+			model.addAttribute("site", site);
+			return "/site/detailSite";
 		}
 		catch (EscaladeException e)
 		{
@@ -126,8 +129,11 @@ public class SiteController
 		// enregistrer le site
 		try
 		{
-			siteService.modifierSite(site);
-			return "redirect:/public/listeSites";
+			site = siteService.modifierSite(site);
+			model.addAttribute("message", "Le site a été modifié avec succès");
+			model.addAttribute("site", site);
+			
+			return "/site/detailSite";
 		}
 		catch (EscaladeException e)
 		{

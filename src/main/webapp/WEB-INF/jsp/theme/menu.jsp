@@ -27,10 +27,11 @@
 		  			<a class="nav-link" href="/inscrit/listeTopos">Liste des Topos</a>
 		  			<a class="nav-link" href="/inscrit/listeToposUtilisateur">Liste de vos Topos</a>
 		  			<a class="nav-link" href="/inscrit/listeToposEmprunt">Liste des Topos empruntés</a>
-		  			<a class="nav-link" href="/inscrit/publierTopo">Nouveau Topo</a>
 		  		</div>
-		</div> 
-		<a class="nav-link" href="/inscrit/listeUtilisateurs">Utilisateurs</a>
+		</div>
+		<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')"> 
+			<a class="nav-link" href="/admin/listeUtilisateurs">Utilisateurs</a>
+		</sec:authorize>
 		<a class="nav-link ml-auto" href="/logout">Se déconnecter</a>
 	</sec:authorize>
 </nav>
