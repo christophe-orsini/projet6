@@ -2,7 +2,6 @@ package com.oc.escalade.controllers;
 
 import java.security.Principal;
 import javax.validation.Valid;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -64,7 +63,7 @@ public class TopoController
 		try
 		{
 			model.addAttribute("topos", topoService.listerToposEmprunt(utilisateur.getName()));
-			return "/topo/listeTopos";
+			return "/topo/listeToposEmprunt";
 		}
 		catch (EscaladeException e)
 		{
@@ -118,8 +117,11 @@ public class TopoController
 		// enregistrer le site
 		try
 		{
-			topoService.publierTopo(topo, utilisateur.getName());
-			return "redirect:/";
+			topo = topoService.publierTopo(topo, utilisateur.getName());
+			model.addAttribute("topo", topo);
+			model.addAttribute("message", "Le topos a été créé avec succès");
+			return "/topo/detailTopo";
+			//return "redirect:/";
 		}
 		catch (EscaladeException e)
 		{
@@ -179,11 +181,5 @@ public class TopoController
 		}
 		
 		return "/topo/listeToposUtilisateur";
-	}
-	
-	@GetMapping("/admin/modifierTopo/{id}")
-	public String enregistrerTopoForm(Model model, @PathVariable Long id)
-	{
-		throw new NotYetImplementedException("Enregistrer un topo");
 	}
 }

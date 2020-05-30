@@ -10,12 +10,7 @@
 <%@ include file="../theme/header.jsp" %>
 <%@ include file="../theme/menu.jsp" %>
 	<section class="container">
-		<div class="row">
-			<div class="col">
-				<a class="btn btn-primary" href="/inscrit/publierTopo">Ajouter</a>
-			</div>
-		</div>
-		<div class="row">
+		<div class="row">	
 			<div class="col">
 				<p class="h3">Liste des topos</p>
 			</div>
@@ -27,6 +22,7 @@
 					<th>Titre</th>
 					<th>Region</th>
 					<th>Description</th>
+					<th>Contact</th>
 					<th>Status</th>
 				</tr>
 			</thead>	
@@ -36,6 +32,10 @@
 					<td><a href="/inscrit/detailTopo/${topo.id}">${topo.titre}</a></td>
 					<td>${topo.region}</td>
 					<td>${topo.description}</td>
+					<c:if test="${!topo.disponible}">
+						<c:if test="${topo.demande}"><td></td></c:if>
+						<c:if test="${!topo.demande}"><td>${topo.proprietaire.email}</td></c:if>							
+					</c:if>
 					<td>
 						<c:if test="${topo.disponible}">
 							<a class="btn btn-primary" href="/inscrit/reserverTopo/${topo.id}">Réserver</a>
