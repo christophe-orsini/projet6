@@ -37,9 +37,6 @@
 					<c:if test="${empty update}">
 						<input class="btn btn-primary" type="submit" value="Publier" />
 					</c:if>
-					<sec:authorize access="hasAnyRole('ROLE_MEMBER', 'ROLE_ADMINISTRATEUR')">
-						<a class="btn btn-primary" href="/membre/supprimerCommentaire/${commentaire.id}">Supprimer</a>
-					</sec:authorize>
 				</form:form>
 			</div>
 		</div>

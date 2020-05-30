@@ -11,10 +11,7 @@
 	<section class="container">
 		<div class="row">
 			<div class="col">
-				<p class="h3">Détail du topo N° <c:out value="${topo.id}" />			
-				<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')">
-					<a class="btn btn-primary" href="/admin/modifierTopo/${topo.id}">Modifier</a>
-				</sec:authorize></p>
+				<p class="h3">Détail du topo N° <c:out value="${topo.id}" />
 			</div>
 		</div>
 		<div class="row">

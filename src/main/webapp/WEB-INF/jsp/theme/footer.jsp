@@ -4,6 +4,7 @@
     	<div class="row">
     		<div class="col">
     			<p class="text-danger"><strong>${exceptionMessage}</strong></p>
+    			<p>${message}</p>
     		</div>
     	</div>
     </footer>

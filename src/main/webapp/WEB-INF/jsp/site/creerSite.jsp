@@ -12,7 +12,12 @@
 	<section class="container">
 	<div class="row">
 			<div class="col">
-				<p class="h3">Publication d'un site</p>
+			<c:if test="${not empty update}">
+					<p class="h3">Modification d'un site</p>
+				</c:if>
+				<c:if test="${empty update}">
+					<p class="h3">Publication d'un site</p>
+				</c:if>				
 			</div>
 		</div>
 		<div class="row">

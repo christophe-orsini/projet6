@@ -85,11 +85,12 @@
 						<ul class="list-group">
 							<c:forEach items="${site.commentaires}" var="commentaire" varStatus="status">
 								<li class="list-group-item">
-									Le <fmt:formatDate type="BOTH" pattern="dd/MM/yy hh:mm" value="${commentaire.dateModification}"/> 									
+									Le <fmt:formatDate type="BOTH" pattern="dd/MM/yy HH:mm" value="${commentaire.dateModification}"/> 									
 									<span class="ml-1">${commentaire.auteur.nom}</span>
 									<span class="ml-1">a dit : ${commentaire.contenu}</span>
 									<sec:authorize access="hasAnyRole('ROLE_MEMBRE', 'ROLE_ADMINISTRATEUR')">
 										<a class="btn btn-primary" href="/membre/modifierCommentaire/${commentaire.id}">Modifier</a>
+										<a class="btn btn-primary" href="/membre/supprimerCommentaire/${commentaire.id}">Supprimer</a>
 									</sec:authorize>
 								</li>
 							</c:forEach>

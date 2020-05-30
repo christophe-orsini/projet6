@@ -2,7 +2,6 @@ package com.oc.escalade.controllers;
 
 import java.security.Principal;
 import javax.validation.Valid;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,7 +50,9 @@ public class CommentaireController
 		try
 		{
 			commentaireService.commenter(commentaire.getContenu(), commentaire.getSite().getId(), utilisateur.getName());
-			return "redirect:/public/detailSite/" + commentaire.getSite().getId();
+			model.addAttribute("site", commentaire.getSite());
+			return "site/detailSite";
+			//return "redirect:/public/detailSite/" + commentaire.getSite().getId();
 		}
 		catch (EscaladeException e)
 		{
@@ -96,7 +97,9 @@ public class CommentaireController
 		try
 		{
 			commentaire = commentaireService.modifierCommentaire(commentaire);
-			return "redirect:/public/detailSite/" + commentaire.getSite().getId();
+			model.addAttribute("site", commentaire.getSite());
+			return "site/detailSite";
+			//return "redirect:/public/detailSite/" + commentaire.getSite().getId();
 		}
 		catch (EscaladeException e)
 		{
