@@ -20,9 +20,9 @@ Clonez le dépôt à cette adresse [https://github.com/christophe-orsini/Projet6
 2. Créer une base de données nommée "escalade"
 3. Installer l'application (voir Installation ci-dessous)
 4. Exécuter l'application une première fois pour construire la structure de la base de données (voir Exécution ci-dessous)
-5. Importer le script `demodatas.sql` pour charger les données de démonstration dans la base  
+5. Importer le script `demodatas.sql` pour charger les données de démonstration dans la base
 
->  \*Vous trouverez ce fichier de script dans le dossier `escalade/src/main/ressources`
+> *Vous trouverez ce fichier de script dans le dossier escalade/src/main/ressources*
 
 L'application est prète à fonctionner avec 3 utilisateurs :
 - `admin@ae.fr` mot de passe `admin` pour le rôle d'administrateur
@@ -34,15 +34,11 @@ L'application est prète à fonctionner avec 3 utilisateurs :
 2. Tapez la commande `install` si vous êtes en mode console ou cliquez sur `install.bat`  
 
 ### Exécution
-Tapez la commande `run` si vous êtes en mode console ou cliquez sur `run.bat`  
+Tapez la commande `run` si vous êtes en mode console ou cliquez sur `run.bat` 
+Entrer l'adresse  dans votre navigateur WEB pour vous rendre sur le site WEB
 
 ### Néttoyage
 Si necessaire, vous pouvez supprimer les données de démonstration en exécutant le script `cleandatas.sql` et la base de données sera entièrement vidées.  
 Si vous exécutez le script `productiondatas.sql`, la base de données sera entièrement vidées et seul le compte de l'administrateur sera créé avec les éléments ci-dessus
 
->  \*Vous trouverez ces fichiers de script dans le dossier `escalade/src/main/ressources`
-
----
-#### Notes de versions
-- Version 0.0.0  
-    - Début du projet
+> *Vous trouverez ces fichiers de script dans le dossier escalade/src/main/ressources*
