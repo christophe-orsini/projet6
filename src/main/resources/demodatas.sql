@@ -21,12 +21,12 @@ INSERT INTO `commentaire` (`id`, `contenu`, `date_modification`, `date_publicati
 
 INSERT INTO `topo` (`id`, `date_publication`, `demande`, `description`, `disponible`, `region`, `titre`, `emprunteur_id`, `proprietaire_id`) VALUES
 (1, '2020-05-29 13:57:02.440000', b'0', 'Ce topo décrit un topo du sud', b'0', 'La région du sud', 'Topo 1', NULL, 3),
-(2, '2020-05-29 13:57:02.446000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 2', NULL, 1),
+(2, '2020-05-29 13:57:02.446000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 2', 3, 1),
 (3, '2020-05-29 13:57:02.449000', b'0', 'Ce topo décrit un topo du sud', b'0', 'La région du sud', 'Topo 3', NULL, 3),
-(4, '2020-05-29 13:57:02.452000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 4', NULL, 1),
+(4, '2020-05-29 13:57:02.452000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 4', 3, 1),
 (5, '2020-05-29 13:57:02.454000', b'0', 'Ce topo décrit un topo du sud', b'0', 'La région du sud', 'Topo 5', NULL, 3),
-(6, '2020-05-29 13:57:02.456000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 6', NULL, 1),
+(6, '2020-05-29 13:57:02.456000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 6', 3, 1),
 (7, '2020-05-29 13:57:02.460000', b'0', 'Ce topo décrit un topo du sud', b'0', 'La région du sud', 'Topo 7', NULL, 3),
-(8, '2020-05-29 13:57:02.462000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 8', NULL, 1),
+(8, '2020-05-29 13:57:02.462000', b'0', 'Ce topo décrit un topo du sud', b'1', 'La région du sud', 'Topo 8', 3, 1),
 (9, '2020-05-29 13:57:02.464000', b'0', 'Ce topo décrit un topo du sud', b'0', 'La région du sud', 'Topo 9', NULL, 3);
 
