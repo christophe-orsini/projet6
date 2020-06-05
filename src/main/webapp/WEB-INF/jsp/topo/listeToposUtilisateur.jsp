@@ -32,13 +32,14 @@
 						<td>${topo.description}</td>
 						<td><c:if test="${!topo.disponible}">
 							<c:if test="${topo.demande}">
-								<a class="btn btn-success btn-sm" href="/inscrit/accepterDemandeTopo/${topo.id}" data-toggle="tooltip"
-									title="Demandé par ${topo.emprunteur.email}">Accepter</a>
-									<a class="btn btn-warning btn-sm" href="/inscrit/retourTopo/${topo.id}" data-toggle="tooltip"
-									title="Demandé par ${topo.emprunteur.email}">Refuser</a>
+								<a class="btn btn-success btn-sm" href="/inscrit/accepterDemandeTopo/${topo.id}"
+									data-toggle="tooltip" title="Demandé par ${topo.emprunteur.email}">Accepter</a>
+									<a class="btn btn-warning btn-sm" href="/inscrit/retourTopo/${topo.id}"
+									data-toggle="tooltip" title="Demandé par ${topo.emprunteur.email}">Refuser</a>
 							</c:if>
 							<c:if test="${!topo.demande}">
-								<a class="btn btn-primary btn-sm" href="/inscrit/retourTopo/${topo.id}">Retour</a>
+								<a class="btn btn-primary btn-sm" href="/inscrit/retourTopo/${topo.id}"
+									data-toggle="tooltip" title="Prêté à ${topo.emprunteur.email}">Retour</a>
 							</c:if>
 						</c:if></td>
 					</tr>
