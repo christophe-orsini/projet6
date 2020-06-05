@@ -4,38 +4,30 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="../theme/head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="../theme/header.jsp" %>
 <%@ include file="../theme/menu.jsp" %>
-	<section class="container">
-		<div class="row">
-			<div class="col">
-				<p class="h3">Création d'un utilisateur</p>
-			</div>
+	<section class="row  justify-content-center">	
+		<div class="col-12">
+			<p class="h3">Création d'un utilisateur</p>
 		</div>
-		<div class="row">
-			<div class="col-lg-5 col">
-				<form:form action="/public/enregistrerUtilisateur" method="post" modelAttribute="utilisateur">
-					<div class="form-group">
-						<form:label path="email">Email</form:label> 
-						<form:input  path="email" class="form-control" />
-						<form:errors path="email" cssClass="error text-danger"/>
-					</div>
-					<div class="form-group">
-						<form:label path="password">Mot de passe</form:label>
-						<form:password path="password" class="form-control" />
-						<form:errors path="password" cssClass="error text-danger"/>
-					</div>
-					<div class="form-group">
-						<form:label path="nom">Nom</form:label>
-						<form:input path="nom" class="form-control" />
-						<form:label path="prenom">Prénom</form:label>
-						<form:input path="prenom" class="form-control" />
-					</div>
-					<input class="btn btn-primary" type="submit" value="Enregistrer">
-				</form:form>
-			</div>
+		<div class="col-12 col-md-6">
+			<form:form action="/public/enregistrerUtilisateur" method="post" class="form-row form-inline" 
+				modelAttribute="utilisateur">			
+				<form:label path="email" class="col-12 col-sm-5">Email</form:label> 
+				<form:input  path="email" class="form-control col-12 col-sm-7" />
+				<form:errors path="email" cssClass="error text-danger col-12"/>
+				<form:label path="password" class="col-12 col-sm-5">Mot de passe</form:label>
+				<form:password path="password" class="form-control col-12 col-sm-4" />
+				<form:errors path="password" cssClass="error text-danger col-12"/>	
+				<form:label path="nom" class="col-12 col-sm-5">Nom</form:label>
+				<form:input path="nom" class="form-control col-12 col-sm-7" />	
+				<form:label path="prenom" class="col-12 col-sm-5">Prénom</form:label>
+				<form:input path="prenom" class="form-control col-12 col-sm-7" />		
+				<input class="btn btn-primary col-6 offset-3" type="submit" value="Enregistrer">
+			</form:form>
 		</div>
 	</section>
 <%@ include file="../theme/footer.jsp" %>
+</body>
 </html>

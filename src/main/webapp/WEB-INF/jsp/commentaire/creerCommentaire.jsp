@@ -6,40 +6,37 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="../theme/head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="../theme/header.jsp" %>
 <%@ include file="../theme/menu.jsp" %>
-	<section class="container">
-		<div class="row">
-			<div class="col">
-				<p class="h3">Votre commentaire pour le site ${commentaire.site.nom}</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
+	<section class="row">
+		<div class="col-12">
+			<p class="h3">${commentaire.site.nom}</p>	
+		</div>	
+		<div class="col-12">		
+			<c:if test="${not empty update}">
+				<c:set var="path" value="/inscrit/enregistrerCommentaire" scope="page"/>
+			</c:if>
+			<c:if test="${empty update}">
+				<c:set var="path" value="/inscrit/creerCommentaire" scope="page"/>
+			</c:if>
+			<form:form action="${path}" method="post" modelAttribute="commentaire" class="form-row">
+				<div class="form-group col-12">
+					<form:hidden path="id" />
+					<form:hidden path="site" />
+					<form:label path="contenu">Commentaire :</form:label> 
+					<form:textarea path="contenu" class="form-control" rows="4" />
+					<form:errors path="contenu" cssClass="error text-danger"/>
+				</div>
 				<c:if test="${not empty update}">
-					<c:set var="path" value="/inscrit/enregistrerCommentaire" scope="page"/>
+					<input class="btn btn-primary btn-sm" type="submit" value=Enregistrer />
 				</c:if>
 				<c:if test="${empty update}">
-					<c:set var="path" value="/inscrit/creerCommentaire" scope="page"/>
+					<input class="btn btn-primary btn-sm" type="submit" value="Publier" />
 				</c:if>
-				<form:form action="${path}" method="post" modelAttribute="commentaire">
-					<div class="form-group">
-						<form:hidden path="id" />
-						<form:hidden path="site" />
-						<form:label path="contenu" class="mr-3">Commentaire :</form:label> 
-						<form:textarea path="contenu" class="form-control" rows="5" />
-						<form:errors path="contenu" cssClass="error text-danger"/>
-					</div>
-					<c:if test="${not empty update}">
-						<input class="btn btn-primary" type="submit" value=Enregistrer />
-					</c:if>
-					<c:if test="${empty update}">
-						<input class="btn btn-primary" type="submit" value="Publier" />
-					</c:if>
-				</form:form>
-			</div>
-		</div>
+			</form:form>
+		</div>	
 	</section>
 <%@ include file="../theme/footer.jsp" %>
+</body>
 </html>
