@@ -5,20 +5,16 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="header.jsp" %>
-	<section id="page-content" class="container">
-	<div class="row">
-			<div class="col">
-				<p class="h3">Erreur</p>
-			</div>
+	<section class="row">
+		<div class="col-12">
+			<p class="h3">Erreur</p>
 		</div>
-		<div class="row">
-			<div class="col">
-				<p>Une erreur s'est produite</p>
-				<p>${exceptionMessage.getMessage()}</p>
-			</div>
-		</div>
+		<div class="col-12">
+			<p>Une erreur s'est produite</p>
+			<p>${exceptionMessage.getMessage()}</p>
+		</div>	
 	</section>
 </body>
 </html>

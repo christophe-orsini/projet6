@@ -5,100 +5,71 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="../theme/head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="../theme/header.jsp" %>
 <%@ include file="../theme/menu.jsp" %>
-	<section class="container">
-		<div class="row">
-			<div class="col">
-				<p class="h3">Détail du site N° <c:out value="${site.id}" />
+	<section class="row justify-content-center">
+		<div class="col-12">
+			<p class="h3">Détail du site N° <c:out value="${site.id}" />
+			<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')">
+				<a class="btn btn-primary btn-sm ml-3" href="/inscrit/modifierSite/${site.id}">Modifier</a>
+			</sec:authorize></p>
+		</div>
+		<div class="col-12">
+			<div class="row col-12">
+				<p>Nom : ${site.nom} <c:if test="${site.tag}"><span class="badge badge-secondary">Officiel</span></c:if>
 				<sec:authorize access="hasAnyRole('ROLE_MEMBRE', 'ROLE_ADMINISTRATEUR')">
 					<c:set var="buttonContent" value="Taguer" scope="page" />
 					<c:if test="${site.tag == true}">
 						<c:set var="buttonContent" value="Retirer le tag" scope="page" />
 					</c:if>
-					<a class="btn btn-primary" href="/membre/taguerSite/${site.id}"><c:out value="${buttonContent}" /></a>
-				</sec:authorize>
-				<sec:authorize access="hasAnyRole('ROLE_ADMINISTRATEUR')">
-					<a class="btn btn-primary" href="/inscrit/modifierSite/${site.id}">Modifier</a>
+					<a class="btn btn-primary btn-sm ml-3" href="/membre/taguerSite/${site.id}"><c:out value="${buttonContent}" /></a>
 				</sec:authorize></p>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<form>
-					<div class="form-inline">
-						<label class="mr-3" for="nom">Nom :</label> 
-						<input class="form-control form-control-sm mr-3" type="text" name="nom" id="nom" value="${site.nom}" readonly />
-						<c:if test="${site.tag}"> Officiel</c:if>
-					</div>
-					<div class="form-inline">
-						<label class="mr-3" for="description">Description :</label> 
-						<input class="form-control form-control-sm" type="text" name="description" id="description"	
-							value="${site.description}" readonly />
-					</div>
-					<div class="form-inline">
-						<label class="mr-3" for="commune">Commune :</label> 
-						<input class="form-control form-control-sm" type="text" name="commune" id="commune" 
-							value="${site.commune}" readonly />
-						<label class="ml-3 mr-3" for="departement">Departement :</label> 
-						<input class="form-control form-control-sm" type="text" name="departement" id="departement"
-							value="${site.departement}" readonly />
-						<label class="ml-3 mr-3" for="pays">Pays :</label> 
-						<input class="form-control form-control-sm" type="text" name="pays" id="pays" 
-							value="${site.pays}" readonly />
-					</div>
-					<div class="form-inline">
-						<label class="mr-3" for="latitude">Latitude :</label> 
-						<input class="form-control form-control-sm" type="text" name="latitude" id="latitude"
-							 value="${site.latitude}" readonly size="8" />
-						<label class="ml-3 mr-3" for="longitude">Longitude :</label> 
-						<input class="form-control form-control-sm" type="text" name="longitude" id="longitude" 
-							value="${site.longitude}" readonly size="8"/>
-					</div>
-					<div class="form-inline">
-						<label class="mr-3" for="nbreSecteurs">Nombre de secteurs :</label> 
-						<input class="form-control form-control-sm" type="number" name="nbreSecteurs" id="nbreSecteurs" 
-						 	value="${site.nbreSecteurs}" readonly style="width:4em"/>
-						<label class="ml-3 mr-3" for="nbreVoies"> Voies :</label> 
-						<input class="form-control form-control-sm" type="number" name="nbreVoies" id="nbreVoies" 
-							value="${site.nbreVoies}" readonly style="width:4em" />
-						<label class="mr-3" for="nbreLongueurs"> Longueurs :</label> 
-						<input class="form-control form-control-sm" type="number" name="nbreLongueurs" id="nbreLongueurs"
-							value="${site.nbreLongueurs}" readonly style="width:4em" />
-						<label class="ml-3 mr-3" for="nbreRelais"> Relais :</label> 
-						<input class="form-control form-control-sm" type="number" name="nbreRelais" id="nbreRelais"
-							value="${site.nbreRelais}" readonly style="width:4em" />
-					</div>
-					<div class="form-inline">
-						<label class="mr-3" for="cotationMini">Cotation : mini :</label> 
-						<input class="form-control form-control-sm" type="text" name="cotationMini" id="cotationMini" 
-							value="${site.cotationMini}" readonly size="3" />
-						<label class="ml-3 mr-3" for="cotationMaxi">maxi :</label> 
-						<input class="form-control form-control-sm" type="text" name="cotationMaxi" id="cotationMaxi" 
-							value="${site.cotationMaxi}" readonly size="3" /><br/>
-					</div>
-					<div class="form-group mt-2">
-						<sec:authorize access="isAuthenticated()">
-							<a class="btn btn-primary" href="/inscrit/commenter/${site.id}">Commenter</a>
-						</sec:authorize>
-						<ul class="list-group">
-							<c:forEach items="${site.commentaires}" var="commentaire" varStatus="status">
-								<li class="list-group-item">
-									Le <fmt:formatDate type="BOTH" pattern="dd/MM/yy HH:mm" value="${commentaire.dateModification}"/> 									
-									<span class="ml-1">${commentaire.auteur.nom}</span>
-									<span class="ml-1">a dit : ${commentaire.contenu}</span>
-									<sec:authorize access="hasAnyRole('ROLE_MEMBRE', 'ROLE_ADMINISTRATEUR')">
-										<a class="btn btn-primary" href="/membre/modifierCommentaire/${commentaire.id}">Modifier</a>
-										<a class="btn btn-primary" href="/membre/supprimerCommentaire/${commentaire.id}">Supprimer</a>
-									</sec:authorize>
-								</li>
-							</c:forEach>
-						</ul>					
-					</div>
-				</form>
+			<div class="row col-12">
+				<p>Description : ${site.description}</p> 
 			</div>
+			<div class="row col-12">
+				<p class="col-md-4 p-0">Commune : ${site.commune}<p>
+				<p class="col-7 col-md-4 p-0">Departement : ${site.departement}<p>
+				<p class="col-5 col-md-4 p-0">Pays : ${site.pays}<p>
+			</div>
+			<div class="row col-12">
+				<p class="col-6 p-0">Latitude : ${site.latitude}</p>
+				<p class="col-6 p-0">Longitude : ${site.longitude}</p>
+			</div>
+			<div class="row col-12">
+				<p class="col-6 col-md-3 p-0">Secteurs : ${site.nbreSecteurs}</p>
+				<p class="col-6 col-md-3 p-0">Voies : ${site.nbreVoies}</p>
+				<p class="col-6 col-md-3 p-0">Longueurs : ${site.nbreLongueurs}</p>
+				<p class="col-6 col-md-3 p-0">Relais : ${site.nbreRelais}</p>
+			</div>
+			<div class="row col-12">
+				<p class="col-6 p-0">Cotation mini : ${site.cotationMini}</p>
+				<p class="col-6 p-0">Cotation maxi : ${site.cotationMaxi}</p>
+			</div>	
+			<div class="row col-12">
+				<sec:authorize access="isAuthenticated()">
+					<div class="col-12">
+						<a class="btn btn-primary btn-sm" href="/inscrit/commenter/${site.id}">Commenter</a>
+					</div>
+				</sec:authorize>
+				<c:forEach items="${site.commentaires}" var="commentaire" varStatus="status">
+					<div class="col-12 row">
+						<p class="col-12 col-md-4 mb-0 bg-light">Le <fmt:formatDate type="BOTH" pattern="dd/MM/yy HH:mm" value="${commentaire.dateModification}"/> 									
+						${commentaire.auteur.nom}</p>
+						<p class="col-12 col-md-6 mb-0">${commentaire.contenu}</p>
+						<sec:authorize access="hasAnyRole('ROLE_MEMBRE', 'ROLE_ADMINISTRATEUR')">
+							<div class="col-12 col-md-2 mb-1 p-0">					
+								<a class="btn btn-primary btn-sm p-1" href="/membre/modifierCommentaire/${commentaire.id}">Modifier</a>
+								<a class="btn btn-warning btn-sm p-1" href="/membre/supprimerCommentaire/${commentaire.id}">Supprimer</a>						
+							</div>
+						</sec:authorize>
+					</div>
+				</c:forEach>									
+			</div>			
 		</div>
 	</section>
 <%@ include file="../theme/footer.jsp" %>
+</body>
 </html>

@@ -5,25 +5,19 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="../theme/head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="../theme/header.jsp" %>
-	<section id="page-content" class="container">
-	<div class="row">
-			<div class="col">
-				<p class="h3">Félicitation !</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<p>Votre inscription est validée</p>
-				<p>Votre identifiant est ${login}</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col">
-				<a class="btn btn-primary" href="/login">Se connecter</a>
-			</div>
-		</div>
+	<section class="row">
+		<div class="col-12">
+			<p class="h3">Félicitation !</p>
+		</div>	
+		<div class="col-12">
+			<p>Votre inscription est validée</p>
+			<p>Votre identifiant est ${login}</p>
+		</div>	
+		<div class="col-12">
+			<a class="btn btn-primary" href="/login">Se connecter</a>
+		</div>		
 	</section>
 </body>
 </html>
