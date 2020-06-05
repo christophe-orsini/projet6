@@ -6,71 +6,72 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="../theme/head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="../theme/header.jsp" %>
 <%@ include file="../theme/menu.jsp" %>
-	<section class="container">	
-		<div class="row">
-			<div class="col border">
-				<form:form action="/public/rechercheSite" method="post" modelAttribute="siteCherche">	
-					<div class="form-inline">
-						<form:label path="nom" class="mr-3">Nom :</form:label> 
-						<form:input path="nom" class="form-control form-control-sm mr-3" />						
-						<form:label path="commune" class="mr-3">Commune :</form:label> 
-						<form:input path="commune" class="form-control form-control-sm" />
-						<form:label path="departement" class="ml-3 mr-3">Departement :</form:label> 
-						<form:input path="departement" class="form-control form-control-sm" style="width:6em" />
-						<form:label path="pays" class="ml-3 mr-3">Pays :</form:label> 
-						<form:input path="pays" class="form-control form-control-sm" style="width:6em" />						
+	<section class="row justify-content-center">	
+		<div class="col-12 border">
+			<form:form action="/public/rechercheSite" method="post" class="form-row form-inline"
+				modelAttribute="siteCherche">				
+				<form:input path="nom" class="form-control form-control-sm col-12" placeholder="Nom" />						
+				<form:input path="commune" class="form-control form-control-sm col-12 col-md-4" placeholder="Commune" />
+				<form:input path="departement" class="form-control form-control-sm col-12 col-sm-6 col-md-4" placeholder="Departement" />
+				<form:input path="pays" class="form-control form-control-sm col-12 col-sm-6 col-md-4" placeholder="Pays" />		
+				<label class="col-12 col-sm-3 col-md-2">Nombre de :</label>
+				<div class="input-group input-group-sm col-5 col-sm-3 col-md-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Secteurs</span>
 					</div>
-					<div class="form-inline">
-						<form:label path="nbreSecteurs" class="mr-3">Nombre de Secteurs :</form:label> 
-						<form:input path="nbreSecteurs" class="form-control form-control-sm" type="number" style="width:4em" />
-						<form:label path="nbreVoies" class="ml-3 mr-3"> Voies :</form:label> 
-						<form:input path="nbreVoies" class="form-control form-control-sm" type="number" style="width:4em" />						
-						<label class="ml-3 mr-3" for="cotation">Cotation : </label> 					
-						<input class="form-control form-control-sm" type="text" name="cotation" id="cotation" 
-							value="${cotation}" size="3" />
-						<form:checkbox path="tag" class="form-check-input ml-3" />
-						<form:label path="tag" class="form-check--label ml-2">Officiel ?</form:label>						
-					</div>						
-					<input class="btn btn-primary ml-auto mr-auto" type="submit" name="submit" value="Rechercher" />										
-				</form:form>
-			</div>		
+					<form:input path="nbreSecteurs" class="form-control" type="number" />
+				</div>
+				<div class="input-group input-group-sm col-4 col-sm-3 col-md-2">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Voies</span>
+					</div>
+					<form:input path="nbreVoies" class="form-control" type="number" />
+				</div>											
+				<input class="form-control form-control-sm col-3 col-sm-2 col-md-1" 
+					type="text" name="cotation" placeholder="Cotation" value="${cotation}" />
+				<div class="form-check form-check-inline col-4 col-md-2 ml-1">
+					<form:checkbox path="tag" class="form-check-input" />
+					<form:label path="tag" class="form-check-label">Officiel ?</form:label>						
+				</div>
+				<input class="btn btn-primary btn-sm ml-auto" type="submit" name="submit" value="Rechercher" />																		
+			</form:form>	
 		</div>
-		<div class="row">
-			<div class="col">
-				<p class="h3">Liste des sites</p>
-			</div>
+		<div class="col-12">
+			<p class="h3">Liste des sites</p>
 		</div>
-		<table class="table table-striped table-bordered table-hoover">
-			<caption>Cliquer sur le nom du site pour voir les détails</caption>
-			<thead>
-				<tr>
-					<th>Publier le</th>
-					<th>Nom</th>
-					<th colspan="2">Lieu</th>
-					<th>Pays</th>
-					<th>Description</th>
-					<th>Site officiel</th>
-				</tr>
-			</thead>	
-			<tbody>
-				<c:forEach items="${sites}" var="site" varStatus="status">
-				<tr>
-					<td><fmt:formatDate value="${ site.datePublication }" type="date" /></td>
-					<td><a href="/public/detailSite/${site.id}">${site.nom}</a></td>
-					<td colspan="2">${site.commune} ${site.departement}</td>
-					<td>${site.pays}</td>
-					<td>${site.description}</td>
-					<td><c:if test="${site.tag}">Oui</c:if></td>
-					<c:if test="${not empty utilisateur}">
-						<td><a class="btn btn-primary" href="/inscrit/modifierSite/${site.id}">Modifier</a></td>
-					</c:if>
-				</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+		<div class="col-12 table-responsive">
+			<table class="table table-sm table-striped table-bordered">
+				<caption>Cliquer sur le nom du site pour voir les détails</caption>
+				<thead>
+					<tr>
+						<th>Publier le</th>
+						<th>Nom</th>
+						<th colspan="2">Lieu</th>
+						<th>Pays</th>
+						<th>Description</th>
+						<th>Site officiel</th>
+					</tr>
+				</thead>	
+				<tbody>
+					<c:forEach items="${sites}" var="site" varStatus="status">
+					<tr>
+						<td><fmt:formatDate value="${ site.datePublication }" type="date" /></td>
+						<td><a href="/public/detailSite/${site.id}">${site.nom}</a></td>
+						<td colspan="2">${site.commune} ${site.departement}</td>
+						<td>${site.pays}</td>
+						<td>${site.description}</td>
+						<td><c:if test="${site.tag}">Oui</c:if></td>
+						<c:if test="${not empty utilisateur}">
+							<td><a class="btn btn-primary" href="/inscrit/modifierSite/${site.id}">Modifier</a></td>
+						</c:if>
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</section>
 <%@ include file="../theme/footer.jsp" %>
 </body>

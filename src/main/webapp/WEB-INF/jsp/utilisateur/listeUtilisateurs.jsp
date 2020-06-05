@@ -4,38 +4,37 @@
 <!DOCTYPE html>
 <html>
 <%@ include file="../theme/head.jsp" %>
-<body>
+<body class="container">
 <%@ include file="../theme/header.jsp" %>
 <%@ include file="../theme/menu.jsp" %>
-	<section>
-		<div class="row">
-			<div class="col">
-				<p class="h3">Liste des sites</p>
-			</div>
+	<section class="row">
+		<div class="col-12">
+			<p class="h3">Liste des utilisateurs</p>
 		</div>
-		<table class="table table-striped table-bordered table-hoover">
-			<caption>Cliquer sur l'utilisateur pour voir les détails</caption>
-			<thead>
-				<tr>
-					<th>email</th>
-					<th>Nom</th>
-					<th>Prenom</th>
-					<th>Role</th>
-					<th>Topos</th>
-				</tr>
-			</thead>	
-			<tbody>
-				<c:forEach items="${utilisateurs}" var="utilisateur" varStatus="status">
-				<tr>
-					<td>${utilisateur.email}</td>
-					<td>${utilisateur.nom}</td>
-					<td>${utilisateur.prenom}</td>
-					<td>${utilisateur.role.getName()}</td>					
-					<td><a class="btn btn-primary" href="/inscrit/listeTopos/${utilisateur.id}">Liste</a></td>					
-				</tr>
-				</c:forEach>
-			</tbody>
-		</table>
+		<div class="col-12 table-responsive">
+			<table class="table table-sm table-striped table-bordered">
+				<thead>
+					<tr>
+						<th>email</th>
+						<th>Nom</th>
+						<th>Prenom</th>
+						<th>Role</th>
+						<th>Topos</th>
+					</tr>
+				</thead>	
+				<tbody>
+					<c:forEach items="${utilisateurs}" var="utilisateur" varStatus="status">
+					<tr>
+						<td>${utilisateur.email}</td>
+						<td>${utilisateur.nom}</td>
+						<td>${utilisateur.prenom}</td>
+						<td>${utilisateur.role.getName()}</td>					
+						<td><a class="btn btn-primary btn-sm" href="/inscrit/listeTopos/${utilisateur.id}">Liste</a></td>					
+					</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 	</section>
 </body>
 </html>
