@@ -24,7 +24,7 @@
 						<th>Titre</th>
 						<th>Region</th>
 						<th>Description</th>
-						<th>Status</th>
+						<th>Statut</th>
 					</tr>
 				</thead>	
 				<tbody>
@@ -34,13 +34,14 @@
 						<td>${topo.region}</td>
 						<td>${topo.description}</td>
 						<td>
-							<c:if test="${topo.disponible}">
+						<c:if test="${topo.disponible}">
+							<c:if test="${topo.proprietaire.email != utilisateur}">	
 								<a class="btn btn-primary btn-sm" href="/inscrit/reserverTopo/${topo.id}">Réserver</a>
-							</c:if>
-							<c:if test="${!topo.disponible}">
-								<c:if test="${topo.demande}">En attente</c:if>
-								<c:if test="${!topo.demande}">En pret</c:if>							
-							</c:if>
+							</c:if></c:if>
+						<c:if test="${!topo.disponible}">
+							<c:if test="${topo.demande}">En attente</c:if>
+							<c:if test="${!topo.demande}">En prêt</c:if>							
+						</c:if>				
 						</td>
 					</tr>
 					</c:forEach>

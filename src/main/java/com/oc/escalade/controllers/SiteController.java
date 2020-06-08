@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.oc.escalade.entities.Site;
-import com.oc.escalade.service.SiteService;
+import com.oc.escalade.services.SiteService;
 import com.oc.escalade.tools.EscaladeException;
 
 @Controller
@@ -170,7 +170,8 @@ public class SiteController
 		Collection<Site> sites = siteService.rechercherSites(siteCherche.getNom(), siteCherche.getCommune(), siteCherche.getDepartement(),
 				siteCherche.getPays(), cotation, siteCherche.getNbreSecteurs(), siteCherche.getNbreVoies(), siteCherche.isTag());
 		
-		model.addAttribute("sites",  sites);
+		model.addAttribute("cotation", cotation);
+		model.addAttribute("sites", sites);
 		
 		return "/site/listeSites";
 	}

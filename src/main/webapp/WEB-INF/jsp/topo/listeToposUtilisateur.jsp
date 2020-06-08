@@ -21,7 +21,7 @@
 						<th>Titre</th>
 						<th>Region</th>
 						<th>Description</th>
-						<th>Status des demandes</th>
+						<th>Statut des demandes</th>
 					</tr>
 				</thead>	
 				<tbody>

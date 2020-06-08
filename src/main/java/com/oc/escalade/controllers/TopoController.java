@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.oc.escalade.entities.Topo;
-import com.oc.escalade.service.TopoService;
+import com.oc.escalade.services.TopoService;
 import com.oc.escalade.tools.EscaladeException;
 
 @Controller
@@ -21,8 +21,9 @@ public class TopoController
 	
 
 	@GetMapping("/inscrit/listeTopos")
-	public String listeTopos(Model model)
+	public String listeTopos(Model model, Principal utilisateur)
 	{
+		model.addAttribute("utilisateur", utilisateur.getName());
 		model.addAttribute("topos", topoService.listerTopos());
 		return "/topo/listeTopos";
 	}

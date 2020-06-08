@@ -1,4 +1,4 @@
-package com.oc.escalade.service;
+package com.oc.escalade.services;
 
 import java.util.ArrayList;
 import java.util.List;

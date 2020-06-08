@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.oc.escalade.entities.Commentaire;
-import com.oc.escalade.service.CommentaireService;
+import com.oc.escalade.services.CommentaireService;
 import com.oc.escalade.tools.EscaladeException;
 
 @Controller

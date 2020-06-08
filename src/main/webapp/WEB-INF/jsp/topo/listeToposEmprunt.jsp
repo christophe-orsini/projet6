@@ -22,7 +22,7 @@
 						<th>Region</th>
 						<th>Description</th>
 						<th>Contact</th>
-						<th>Status</th>
+						<th>Statut</th>
 					</tr>
 				</thead>	
 				<tbody>
@@ -41,7 +41,7 @@
 							</c:if>
 							<c:if test="${!topo.disponible}">
 								<c:if test="${topo.demande}">En attente</c:if>
-								<c:if test="${!topo.demande}">En pret</c:if>							
+								<c:if test="${!topo.demande}">En prêt</c:if>							
 							</c:if>
 						</td>
 					</tr>

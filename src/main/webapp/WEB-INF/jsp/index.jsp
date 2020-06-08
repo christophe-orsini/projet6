@@ -15,9 +15,9 @@
 		<div class="col-12">	
 			<h5>Bienvenue sur le site des amis de l'escalade.</h5>
 			<p>Vous y touverez toutes les informations concernant les lieux d'escalades en France et à l'étranger<br />
-			déposées par nos amis, et bien plus encore ...</p>
+			déposés par nos amis, et bien plus encore ...</p>
 			<sec:authorize access="!isAuthenticated()">
-				<h5>Vous n'etes pas encore inscrit ?<br />
+				<h5>Vous n'avez pas encore de compte ?<br />
 				N'attendez pas, <a href="/inscription">inscrivez-vous !</a></h5>
 			</sec:authorize>
 		</div>	
