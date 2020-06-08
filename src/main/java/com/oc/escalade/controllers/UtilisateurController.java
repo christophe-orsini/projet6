@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.oc.escalade.entities.RoleEnum;
 import com.oc.escalade.entities.Utilisateur;
-import com.oc.escalade.service.UtilisateurService;
+import com.oc.escalade.services.UtilisateurService;
 import com.oc.escalade.tools.EscaladeException;
 
 @Controller

@@ -15,7 +15,7 @@
 				<span class="badge badge-secondary">Disponible</span>
 			</c:if>	
 			<p>Titre : ${topo.titre}</p>
-			<p>Date publication : <fmt:formatDate type="DATE" pattern="dd/MM/yy" value="${topo.datePublication}"/></p>
+			<p>Date de publication : <fmt:formatDate type="DATE" pattern="dd/MM/yy" value="${topo.datePublication}"/></p>
 			<p>Region : ${topo.region}</p>
 			<p>Description :</p>
 			<p>${topo.description}</p>

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import com.oc.escalade.entities.Site;
-import com.oc.escalade.service.SiteService;
+import com.oc.escalade.services.SiteService;
 
 @Controller
 public class MainController

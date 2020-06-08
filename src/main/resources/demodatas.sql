@@ -8,7 +8,7 @@ INSERT INTO `site` (`id`, `commune`, `cotation_maxi`, `cotation_mini`, `date_pub
 (2, 'Romans', '7c', '5b', '2020-05-25 17:32:02', 'Drôme', 'Un site parfait', 44.5, 5.5, 21, 16, 3, 8, 'Le bois de Romans', 'France', b'0', 3),
 (3, 'Malissard', '8c', '3b', '2020-05-26 09:16:00', 'Drôme', 'Site très technique', 44.5, 5.5, 21, 16, 3, 8, 'Site de l''école d''escalade', 'France', b'1', 1),
 (4, 'Romans', '5a', '3a', '2020-05-26 10:44:02', 'Drôme', 'Site parfait pour les enfants', 44.5, 5.5, 21, 16, 3, 8, 'Les sentiers de bidule', 'France', b'0', 2),
-(5, 'Valence', '6c', '5b', '2020-05-27 14:30:00', 'Drôme', 'Escalade du richer de Crussol', 44.5, 5.5, 21, 16, 3, 8, 'Montagne de Crussol', 'France', b'0', 1),
+(5, 'Valence', '6c', '5b', '2020-05-27 14:30:00', 'Drôme', 'Escalade du rocher de Crussol', 44.5, 5.5, 21, 16, 3, 8, 'Montagne de Crussol', 'France', b'0', 1),
 (6, 'Avignon', '7c', '3b', '2020-05-28 21:07:12', 'Vaucluse', 'Mur d''escalade', 44.5, 5.5, 21, 16, 3, 8, 'Palais des Papes', 'France', b'1', 3),
 (7, 'Nîmes', '8c', '4b', '2020-05-29 12:01:00', 'Gard', 'L''escalade du pont du Gard', 44.5, 5.5, 21, 16, 3, 8, 'Pont du Gard', 'France', b'0', 2);
 
