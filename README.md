@@ -22,10 +22,11 @@ Clonez le dépôt à cette adresse [https://github.com/christophe-orsini/Projet6
 3. Installer l'application  
     - Placez vous dans le dossier où vous avez cloné le dépôt  
     - Tapez la commande `install` si vous êtes en mode console ou cliquez sur `install.bat`
-4. Exécuter l'application **une première fois** pour construire la structure de la base de données 
+4. Démarrez d'application pour construire la structure de la base de données 
     - Tapez la commande `run` si vous êtes en mode console ou cliquez sur `run.bat` pour démarrer le serveur  
-    - Entrer l'adresse [http://localhost:8080](http://localhost:8080) dans votre navigateur WEB préféré pour vous rendre sur le site WEB (**N'utilisez pas encore l'application**)
+    - **N'utilisez pas encore l'application**
 5. Importer le script `demodatas.sql` pour charger les données de démonstration dans la base
+6. Entrer l'adresse [http://localhost:8080](http://localhost:8080) dans votre navigateur WEB préféré pour vous rendre sur le site WEB  
 
 > *Vous trouverez ce fichier de script dans les livrables ou dans le dossier escalade/src/main/ressources*
 
